@@ -20,6 +20,7 @@
         "@babel/preset-env": "^7.20.2",
         "@rollup/plugin-babel": "^6.0.3",
         "@rollup/plugin-node-resolve": "^15.0.1",
+        "@types/aws-lambda": "^8.10.111",
         "babel-loader": "^9.1.2",
         "chokidar": "^3.5.3",
         "cssnano": "^5.1.15",
