@@ -1,0 +1,35 @@
+{
+    "name": "lostpet.jp",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/arayutw/lostpet.jp.git"
+    },
+    "author": "",
+    "bugs": {
+        "url": "https://github.com/arayutw/lostpet.jp/issues"
+    },
+    "homepage": "https://lostpet.jp/",
+    "dependencies": {
+        "@aws-sdk/client-s3": "^3.282.0",
+        "@babel/core": "^7.21.0",
+        "@babel/preset-env": "^7.20.2",
+        "@rollup/plugin-babel": "^6.0.3",
+        "@rollup/plugin-node-resolve": "^15.0.1",
+        "babel-loader": "^9.1.2",
+        "chokidar": "^3.5.3",
+        "cssnano": "^5.1.15",
+        "esbuild": "^0.17.10",
+        "postcss": "^8.4.21",
+        "postcss-import": "^15.1.0",
+        "rollup": "^3.18.0",
+        "rollup-plugin-dts": "^5.2.0",
+        "rollup-plugin-esbuild": "^5.0.0",
+        "typescript": "^4.9.5",
+        "uglify-js": "^3.17.4"
+    }
+}
