@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2020",
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "declaration": false,
+    "lib": [
+      "ES6",
+      "ES2020",
+    ],
+  },
+  "include": [
+    "**/*.mts",
+  ]
+}
