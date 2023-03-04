@@ -27,7 +27,7 @@ class Discord
         self::send($this->url, $this->message);
     }
 
-    static public function send(?string $url = "https://discord.com/api/webhooks/1081413110767829074/TpdQUCi-Eb8uc1RSHnlAh5aNaeXff-wCSmjFohmDH9jitwLRHe2TQ8RkTdxmUeFnbTuS", array $content): void
+    static public function send(?string $url = "", array $content): void
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
