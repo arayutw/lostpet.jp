@@ -29,15 +29,19 @@ class Discord
 
     static public function send(?string $url = "", array $content): void
     {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($content));
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        if (!$url) $url = file_get_contents(__DIR__ . "/.secret/default.txt");
 
-        curl_exec($ch);
-        curl_close($ch);
+        if ($url) {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($content));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+            curl_exec($ch);
+            curl_close($ch);
+        }
     }
 }
