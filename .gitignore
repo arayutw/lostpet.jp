@@ -10,3 +10,9 @@
 /lambda/**/*.mjs
 /lambda/**/env.json
 /lambda/**/policy.json
+/lambda/**/local
+
+/ec2/lib/**/vendor
+/ec2/secret
+/ec2/action
+/ec2/document/lib/**/.secret
