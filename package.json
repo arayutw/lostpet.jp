@@ -15,6 +15,7 @@
     },
     "homepage": "https://lostpet.jp/",
     "dependencies": {
+        "@aws-sdk/client-mediaconvert": "^3.284.0",
         "@aws-sdk/client-s3": "^3.282.0",
         "@babel/core": "^7.21.0",
         "@babel/preset-env": "^7.20.2",
