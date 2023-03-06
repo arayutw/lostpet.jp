@@ -7,10 +7,12 @@
 /action/src/env
 /action/dist
 
-/lambda/**/*.mjs
-/lambda/**/env.json
-/lambda/**/policy.json
-/lambda/**/local
+/lambda/functions/**/*.mjs
+/lambda/functions/**/env.json
+/lambda/functions/**/policy.json
+/lambda/functions/**/local
+/lambda/layers/**/node_modules
+/lambda/layers/**/*.zip
 
 /ec2/lib/**/vendor
 /ec2/secret
