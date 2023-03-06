@@ -7,7 +7,7 @@ export class S3ProdStyleSync {
   private readonly since: number = Date.now()
 
   constructor() {
-    chokidar.watch(ENV.root + "/ec2/document/public_html/styles/prod", {
+    chokidar.watch(ENV.root + "/ec2/document/styles/prod", {
       ignored: /[\/\\]\./
     })
       .on("add", path => this.put(path))
