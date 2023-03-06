@@ -39,6 +39,7 @@ class TransferItem {
         pdf: "application/pdf",
         m3u8: "application/x-mpegURL",
         ts: "video/MP2T",
+        webmanifest: "application/manifest+json;charset=utf-8",
         dat: "application/octet-stream",
     }
 
@@ -80,6 +81,7 @@ class TransferItem {
                         commandInput.CacheControl = "max-age=2592000,public,immutable";
 
                     } else if (-1 !== this.dist.indexOf(".webmanifest") || -1 !== this.dist.indexOf("manifest.json")) {
+                        commandInput.CacheControl = "max-age=600,public,immutable";
                         commandInput.ContentType = "application/manifest+json;charset=utf-8";
                     } else {
                         if (this.extension === "js" || this.extension === "css") {
