@@ -1,0 +1,9 @@
+@media (prefers-color-scheme: dark) {
+  .t2 {
+    color-scheme: dark;
+
+    --a2: #eee;
+
+    --b1: #1c1c1e;
+  }
+}
