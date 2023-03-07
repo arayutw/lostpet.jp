@@ -15,7 +15,11 @@
 /lambda/layers/**/node_modules
 /lambda/layers/**/*.zip
 
+/s3/src/styles
+
 /ec2/lib/**/vendor
 /ec2/secret
 /ec2/action
 /ec2/document/lib/**/.secret
+/ec2/document/scripts/prod
+/ec2/document/styles/prod
