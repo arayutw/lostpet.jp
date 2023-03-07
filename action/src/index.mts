@@ -1,3 +1,5 @@
 export * from "./s3-local-sync/index.mjs"
 export * from "./s3-prod-script-sync/index.mjs"
 export * from "./s3-prod-style-sync/index.mjs"
+export * from "./compile-style/index.mjs"
+export * from "./compile-script/index.mjs"
