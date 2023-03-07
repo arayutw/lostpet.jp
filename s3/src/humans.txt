@@ -1,0 +1,15 @@
+I am a developer who aims to solve the lost pet problem in Japan.
+
+website: https://lostpet.jp/
+twitter: https://twitter.com/lostpetjp
+github: https://github.com/arayutw/lostpet.jp
+
+thanks
+lostpet.jp
+
+Last update: 2023/03/07
+Language: Japanese
+Doctype: HTML5
+Standards: HTML5, CSS3, JavaScript, PHP
+Components: Typescript
+IDE: vscode
