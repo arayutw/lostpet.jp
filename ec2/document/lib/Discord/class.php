@@ -27,11 +27,11 @@ class Discord
         self::send($this->url, $this->message);
     }
 
-    static public function send(?string $url = "", array $content): void
+    static public function send(?string $url = "", array $content = []): void
     {
         if (!$url) $url = file_get_contents(__DIR__ . "/.secret/default.txt");
 
-        if ($url) {
+        if ($url && $content) {
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
             curl_setopt($ch, CURLOPT_POST, 1);
