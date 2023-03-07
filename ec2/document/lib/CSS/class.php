@@ -35,7 +35,7 @@ class CSS
 
     private function split(int $style_id): array
     {
-        $text = file_get_contents(__DIR__ . "/../../styles/{$style_id}.css");
+        $text = file_get_contents(__DIR__ . "/../../styles/" . (2 === _STAGE_ ? "dev" : "prod") . "/{$style_id}.css");
 
         $positions = [];
 
@@ -173,12 +173,12 @@ class CSS
 
     private function name(int $bundle_id, int $version)
     {
-        $this->basename = "b1u2n3d4l5e6" . md5((string)$bundle_id) . $version;
+        $this->basename = "b1u2n3d4l5e6" . md5((string)$bundle_id) . $version . ".css";
         $this->pathname = "/styles/" . $this->basename;
-        $this->href = "?v=" . _VERSION_;
+        $this->href = $this->pathname . "?v=" . _VERSION_;
     }
 
-    public function create(array $style_ids): void
+    public function __construct(array $style_ids)
     {
         $name = implode(":", $style_ids);
         $column = 2 === _STAGE_ ? "dev" : "prod";
@@ -186,7 +186,6 @@ class CSS
         $version = max([
             ...array_map(fn (int $id) => filemtime(__DIR__ . "/../../styles/{$column}/{$id}.css"), $style_ids),
         ]);
-
 
         $row = RDS::fetch("SELECT `id`, `{$column}` FROM `css` WHERE `name`=? LIMIT 1;", [
             $name,
