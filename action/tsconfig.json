@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es6",
-    "module": "es2020",
+    "target": "ESNext",
+    "module": "ESNext",
     "sourceMap": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -13,7 +13,7 @@
     "declarationDir": "dist/types",
     "declaration": true,
     "lib": [
-      "es6"
+      "ESNext"
     ],
   },
   "include": [
