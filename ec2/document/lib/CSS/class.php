@@ -6,6 +6,7 @@ class CSS
 {
     public string $basename = "";
     public string $pathname = "";
+    public string $href = "";
     private string $text = "";
 
     private array $position = [];
@@ -174,6 +175,7 @@ class CSS
     {
         $this->basename = "b1u2n3d4l5e6" . md5((string)$bundle_id) . $version;
         $this->pathname = "/styles/" . $this->basename;
+        $this->href = "?v=" . _VERSION_;
     }
 
     public function create(array $style_ids): void
