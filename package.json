@@ -25,6 +25,7 @@
         "@types/imagemin": "^8.0.1",
         "@types/imagemin-mozjpeg": "^8.0.1",
         "@types/imagemin-pngquant": "^8.0.0",
+        "@types/postcss-import": "^14.0.0",
         "@types/sharp": "^0.31.1",
         "babel-loader": "^9.1.2",
         "chokidar": "^3.5.3",
