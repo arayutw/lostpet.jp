@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 class CSS
 {
+    public string $filename = "";
     public string $basename = "";
     public string $pathname = "";
     public string $href = "";
@@ -173,29 +174,32 @@ class CSS
 
     private function name(int $bundle_id, int $version)
     {
-        $this->basename = "b1u2n3d4l5e6" . md5((string)$bundle_id) . $version . ".css";
+        $this->filename = "b1u2n3d4l5e6i{$bundle_id}t{$version}";
+        $this->basename = $this->filename . ".css";
         $this->pathname = "/styles/" . $this->basename;
         $this->href = $this->pathname . "?v=" . _VERSION_;
     }
 
     public function __construct(array $style_ids)
     {
-        $name = implode(":", $style_ids);
-        $column = 2 === _STAGE_ ? "dev" : "prod";
+        $key = implode(":", $style_ids);
+        $stage = 2 === _STAGE_ ? "dev" : "prod";
 
         $version = max([
-            ...array_map(fn (int $id) => filemtime(__DIR__ . "/../../styles/{$column}/{$id}.css"), $style_ids),
+            ...array_map(fn (int $id) => filemtime(__DIR__ . "/../../styles/{$stage}/{$id}.css"), $style_ids),
         ]);
 
-        $row = RDS::fetch("SELECT `id`, `{$column}` FROM `css` WHERE `name`=? LIMIT 1;", [
-            $name,
+        $row = RDS::fetch("SELECT `id`, `version` FROM `css` WHERE `stage`=? AND `key`=? LIMIT 1;", [
+            _STAGE_,
+            $key,
         ]);
 
-        if ($row && $version === $row[$column]) {
+        if ($row && $version === $row["version"]) {
             $this->name($row["id"], $version);
         } else {
-            $bundle_id = $row ? $row["id"] : RDS::insert("INSERT INTO `css` (`name`) VALUES (?);", [
-                $name,
+            $bundle_id = $row ? $row["id"] : RDS::insert("INSERT INTO `css` (`stage`, `key`) VALUES (?, ?);", [
+                _STAGE_,
+                $key,
             ]);
 
             foreach ($style_ids as $id) $this->parse($id);
@@ -204,14 +208,15 @@ class CSS
 
             $this->name($bundle_id, $version);
 
-            S3::putObject(Secret::get("/s3/env.json")["Bucket"], "styles/{$column}/styles/" . $this->basename . ".css", [
+            S3::putObject(Secret::get("/s3/env.json")["Bucket"], "styles/{$stage}/styles/" . $this->basename . ".css", [
                 "Body" => $this->text,
                 "CacheControl" => "max-age=2592000,public,immutable",
                 "ContentType" => "text/css;charset=utf-8",
             ]);
 
-            RDS::execute("UPDATE `css` SET `{$column}`=?, `map`=? WHERE `id`=? LIMIT 1;", [
+            RDS::execute("UPDATE `css` SET `version`=?, `name`=?, `map`=? WHERE `id`=? LIMIT 1;", [
                 $version,
+                $this->filename,
                 json_encode(array_map(fn (array $entry) => [
                     "id" => $entry["id"],
                     "position" => $entry["position"],
