@@ -7,7 +7,7 @@ class Head
     static public function create(array $head): string
     {
         return Json2Node::create(array_filter(
-            self::merge($head, [
+            self::merge([
                 [
                     "attribute" => [
                         "charset" => "UTF-8",
@@ -60,13 +60,6 @@ class Head
                     "attribute" => [
                         "content" => "#228ae6",
                         "name" => "apple-mobile-web-app-status-bar-style",
-                    ],
-                    "tagName" => "meta",
-                ],
-                [
-                    "attribute" => [
-                        "content" => "ja_JP",
-                        "property" => "og:locale",
                     ],
                     "tagName" => "meta",
                 ],
@@ -163,8 +156,8 @@ class Head
                     ],
                     "tagName" => "link",
                 ],
-            ], false),
-            fn (array $entry) => !(("link" === $entry["tagName"] && is_null($entry["attribute"]["rel"])) || ("meta" === $entry["tagName"] && is_null($entry["attribute"]["property"])))
+            ], $head, true),
+            fn (array $entry) => !(("link" === $entry["tagName"] && is_null($entry["attribute"]["href"])) || ("meta" === $entry["tagName"] && isset($entry["attribute"]["content"]) && is_null($entry["attribute"]["content"])))
         ));
     }
 
@@ -177,8 +170,11 @@ class Head
                 if (
                     $entry["tagName"] === $default_entry["tagName"]
                     && (
-                        ("link" === $entry["tagName"] && $entry["attribute"]["rel"] === $default_entry["attribute"]["rel"])
-                        || ("meta" === $entry["tagName"] && $entry["attribute"]["property"] === $default_entry["attribute"]["property"])
+                        ("link" === $entry["tagName"] && isset($entry["attribute"]["rel"]) && isset($default_entry["attribute"]["rel"]) && $entry["attribute"]["rel"] === $default_entry["attribute"]["rel"])
+                        || ("meta" === $entry["tagName"] && (
+                            (isset($entry["attribute"]["property"]) && isset($default_entry["attribute"]["property"]) && $entry["attribute"]["property"] === $default_entry["attribute"]["property"])
+                            || (isset($entry["attribute"]["name"]) && isset($default_entry["attribute"]["name"]) && $entry["attribute"]["name"] === $default_entry["attribute"]["name"])
+                        ))
                         || ("title" === $entry["tagName"])
                     )
                 ) {
