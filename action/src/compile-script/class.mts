@@ -50,93 +50,95 @@ export class CompileScript {
           ...JSON.parse(fs.readFileSync(envPath, "utf-8")),
         }
 
-        const replacePath = dirname + "/replace.json";
-        let replaceJson = {};
+        if (true === envJson.ready) {
+          const replacePath = dirname + "/replace.json";
+          let replaceJson = {};
 
-        if (fs.existsSync(replacePath)) {
-          replaceJson = {
-            ...replaceJson,
-            ...JSON.parse(fs.readFileSync(replacePath, "utf-8")),
+          if (fs.existsSync(replacePath)) {
+            replaceJson = {
+              ...replaceJson,
+              ...JSON.parse(fs.readFileSync(replacePath, "utf-8")),
+            }
           }
-        }
 
-        rollup({
-          input: inputPath,
-          plugins: [
-            nodeResolve(),
-            jsonResolve(),
-            rollupReplace({
-              preventAssignment: true,
-              values: replaceJson,
-            }),
-            esbuild({
-              minify: false,
-            }),
-            getBabelOutputPlugin({
-              "presets": [
-                [
-                  "@babel/env",
-                  {
-                    "modules": false,
-                    "loose": true
-                  }
-                ]
-              ],
-              "env": {
-                "test": {
-                  "presets": [
-                    [
-                      "@babel/env"
-                    ]
-                  ]
-                }
-              },
-              allowAllFormats: true,
-            }),
-            {
-              name: 'minify',
-              renderChunk(code) {
-                const result = uglifyJs.minify(code, {
-                  sourceMap: true,
-                  compress: {
-                    // negate_iife: false,
-                    passes: 10,
-                  },
-                  output: {
-                    comments: /^!/,
-                  },
-                  toplevel: true,
-                  mangle: {
-                    reserved: "script" === envJson.id ? ["a",] : ["grecaptcha",],
-                    properties: {
-                      regex: /^_/,
-                    },
-                  },
-                });
-
-                if (result.error) {
-                  throw result.error;
-                }
-
-                return result;
-              },
-            },
-          ],
-        })
-          .then((rollupBuild: RollupBuild) => {
-            const path = ENV.root + "/ec2/document/scripts/dev/" + envJson.id + ".js";
-
-            return Promise.all([
-              path,
-              rollupBuild.write({
-                file: path,
+          rollup({
+            input: inputPath,
+            plugins: [
+              nodeResolve(),
+              jsonResolve(),
+              rollupReplace({
+                preventAssignment: true,
+                values: replaceJson,
               }),
-            ]);
+              esbuild({
+                minify: false,
+              }),
+              getBabelOutputPlugin({
+                "presets": [
+                  [
+                    "@babel/env",
+                    {
+                      "modules": false,
+                      "loose": true
+                    }
+                  ]
+                ],
+                "env": {
+                  "test": {
+                    "presets": [
+                      [
+                        "@babel/env"
+                      ]
+                    ]
+                  }
+                },
+                allowAllFormats: true,
+              }),
+              {
+                name: 'minify',
+                renderChunk(code) {
+                  const result = uglifyJs.minify(code, {
+                    sourceMap: true,
+                    compress: {
+                      // negate_iife: false,
+                      passes: 10,
+                    },
+                    output: {
+                      comments: /^!/,
+                    },
+                    toplevel: true,
+                    mangle: {
+                      reserved: "script" === envJson.id ? ["a",] : ["grecaptcha",],
+                      properties: {
+                        regex: /^_/,
+                      },
+                    },
+                  });
+
+                  if (result.error) {
+                    throw result.error;
+                  }
+
+                  return result;
+                },
+              },
+            ],
           })
-          .then(([path, output]: [string, RollupOutput]) => {
-            console.log("put", path);
-          })
-          .catch(err => console.error("error: ", err));
+            .then((rollupBuild: RollupBuild) => {
+              const path = ENV.root + "/ec2/document/scripts/dev/" + envJson.id + ".js";
+
+              return Promise.all([
+                path,
+                rollupBuild.write({
+                  file: path,
+                }),
+              ]);
+            })
+            .then(([path, output]: [string, RollupOutput]) => {
+              console.log("put", path);
+            })
+            .catch(err => console.error("error: ", err));
+        }
       }
     }
   }
