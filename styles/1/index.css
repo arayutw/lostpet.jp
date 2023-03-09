@@ -1,3 +1,5 @@
 @import "./style.css";
 @import "./light.css";
 @import "./dark.css";
+@import "./min360.css";
+@import "./min480.css";
