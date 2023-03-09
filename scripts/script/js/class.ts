@@ -26,7 +26,7 @@ export class JS extends Component {
                 if (this.caches[id]) {
                     resolve(this.caches[id]);
                 } else {
-                    import("/scripts/" + id + ".js?v=" + this.window!.version)
+                    import("/scripts/" + id + ".js?v=" + this.window.version)
                         .then((response) => {
                             const module = response.default;
                             const promises: Array<any> = [module,];
@@ -36,7 +36,7 @@ export class JS extends Component {
                                 const styleIds: Array<number> | undefined = module.css;
 
                                 scriptIds?.forEach((id) => promises.push(this.load(id)));
-                                if (styleIds) promises.push(this.window!.css!.load(styleIds));
+                                if (styleIds) promises.push(this.window.css.load(styleIds));
                             }
 
                             return Promise.all(promises);
@@ -49,14 +49,14 @@ export class JS extends Component {
                                 let component: any;
                                 const type = module.type;
 
-                                if ("lostpetjp" === module.scope) {
+                                if ("cec073ceb46482ef596df4c8724c4134" === module.scope) {
                                     if ("class" === type) {
                                         let components = module.component;
                                         if (!Array.isArray(components)) components = [components];
                                         component = this.caches[id] = components[0];
 
                                         components.forEach((component: ExtendsTarget) => {
-                                            this.window!.factory.create(component);
+                                            this.window.factory.create(component);
                                         });
                                     } else if ("function" === type || "object" === type) {
                                         component = this.caches[id] = module.component;
@@ -86,7 +86,7 @@ export class JS extends Component {
                         .catch((err) => {
                             if (this.S) {
                                 console.error(err);
-                                this.window!.throw();
+                                this.window.throw();
                             }
                         })
                         .finally(reject);
