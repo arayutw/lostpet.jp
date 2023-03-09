@@ -3,6 +3,8 @@ html {
   color: var(--a2);
   font: 400 16px/1.618 "Helvetica Neue", -apple-system, Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   word-break: break-all;
+
+  --s1: 8px;
 }
 
 body {
@@ -15,6 +17,6 @@ svg {
   display: block;
 }
 
-.v {
+.h {
   visibility: hidden;
 }
