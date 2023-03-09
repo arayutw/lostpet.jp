@@ -1,0 +1,11 @@
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --t1: #156bf4;
+    }
+}
+
+@media (hover: hover) and (prefers-color-scheme: dark) {
+    .t2 {
+        --t1h: #0a58d6;
+    }
+}
