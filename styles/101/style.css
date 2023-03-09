@@ -1,0 +1,13 @@
+.a3 {
+    display: block;
+    border: unset;
+    padding: unset;
+    margin: unset;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--a1);
+    user-select: none;
+    text-decoration: none;
+    cursor: pointer;
+}
