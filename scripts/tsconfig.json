@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "esnext",
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "declaration": true,
+        "useDefineForClassFields": false,
+        "lib": [
+            "WebWorker",
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ]
+    },
+    "include": [
+        "**/*.ts",
+        "inline.js",
+    ],
+    "exclude": []
+}
