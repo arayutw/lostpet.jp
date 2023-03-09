@@ -2,23 +2,23 @@ import { Win } from "../script/window";
 
 export class Component {
     constructor(options: InitOptions) {
-        this.init!(options);
+        this.init(options);
     }
 
-    window?: Win
+    window!: Win
 
     C: Components = []
     T: TimerIdMap = {}
     D: ToEventEntriesMap = {}
     E: FromEventEntries = []
-    P?: Component | null
+    P!: Component
     S: boolean = true
 
-    init?: Init
-    on?: On
-    off?: Off
-    emit?: Emit
-    destroy?: Destroy
+    init!: Init
+    on!: On
+    off!: Off
+    emit!: Emit
+    destroy!: Destroy
 }
 
 export type Components = Array<Component>
