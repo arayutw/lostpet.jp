@@ -18,6 +18,8 @@ foreach ([
     "SES",
     "Secret",
     "Slack",
+    "UIFooter",
+    "UIHeader",
     "Turnstile",
     "utils",
 ] as $name) {
