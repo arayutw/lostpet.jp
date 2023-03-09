@@ -74,24 +74,7 @@ export class CompileScript {
                 minify: false,
               }),
               getBabelOutputPlugin({
-                "presets": [
-                  [
-                    "@babel/env",
-                    {
-                      "modules": false,
-                      "loose": true
-                    }
-                  ]
-                ],
-                "env": {
-                  "test": {
-                    "presets": [
-                      [
-                        "@babel/env"
-                      ]
-                    ]
-                  }
-                },
+                configFile: ENV.root + '/.babelrc',
                 allowAllFormats: true,
               }),
               {
