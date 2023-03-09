@@ -174,7 +174,7 @@ class CSS
 
     private function name(int $bundle_id, int $version)
     {
-        $this->filename = "b1u2n3d4l5e6i{$bundle_id}t{$version}";
+        $this->filename = "i{$bundle_id}t{$version}z";
         $this->basename = $this->filename . ".css";
         $this->pathname = "/styles/" . $this->basename;
         $this->href = $this->pathname . "?v=" . _VERSION_;
@@ -202,19 +202,21 @@ class CSS
                 $key,
             ]);
 
+            sort($style_ids);
+
             foreach ($style_ids as $id) $this->parse($id);
 
             $this->build();
 
             $this->name($bundle_id, $version);
 
-            S3::putObject(Secret::get("/s3/env.json")["Bucket"], "styles/{$stage}/styles/" . $this->basename . ".css", [
+            S3::putObject(Secret::get("/s3/env.json")["Bucket"], "styles/{$stage}/styles/" . $this->basename, [
                 "Body" => $this->text,
                 "CacheControl" => "max-age=2592000,public,immutable",
                 "ContentType" => "text/css;charset=utf-8",
             ]);
 
-            RDS::execute("UPDATE `css` SET `version`=?, `name`=?, `map`=? WHERE `id`=? LIMIT 1;", [
+            RDS::execute("UPDATE `css` SET `version`=?, `key`=?, `map`=? WHERE `id`=? LIMIT 1;", [
                 $version,
                 $this->filename,
                 json_encode(array_map(fn (array $entry) => [
