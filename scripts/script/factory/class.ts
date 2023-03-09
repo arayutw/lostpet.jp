@@ -11,7 +11,7 @@ export class Factory {
 
     features = features
 
-    window?: Win
+    window!: Win
 }
 
 type features = {
@@ -228,6 +228,8 @@ export const features: features = {
 
                 parent.C = newEntries;
             }
+
+            // destroy時に自動的に削除するメンバーを定義できると便利
         }
     },
 }
