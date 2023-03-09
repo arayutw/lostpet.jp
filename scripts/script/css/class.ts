@@ -1,6 +1,6 @@
 import { Component, Components, InitOptions } from "../../component"
 
-export type StyleId = number | string
+export type StyleId = number
 export type StyleIds = Array<StyleId>
 
 type CSSText = string
@@ -80,14 +80,14 @@ export class CSS extends Component {
 
     setup(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const href = (document.head.querySelector("link[href^='/styles/b1u2n3d4l5e6i']") as HTMLLinkElement).href;
-            const matches = href.match(/\/b1u2n3d4l5e6i([0-9]+)t([0-9]+)\.css/);
+            const href = (document.head.querySelector("link[href^='/styles/i']") as HTMLLinkElement).href;
+            const matches = href.match(/\/i([0-9]+)t([0-9]+)z\.css/);
             const bundleId = matches![1];
             const version = matches![2];
 
             Promise.all([
                 fetch(href),
-                this.window!.fetch({
+                this.window.fetch({
                     credentials: false,
                     method: "GET",
                     body: {
@@ -106,10 +106,10 @@ export class CSS extends Component {
                     }
                 })
                 .then((responses) => {
-                    if (this.S) {
-                        const cssText = responses![0];
+                    if (this.S && responses) {
+                        const cssText = responses[0];
 
-                        (responses![1] as MetaEntries).forEach((entry) => {
+                        (responses[1] as MetaEntries).forEach((entry) => {
                             const start = entry.position[0];
                             const end = start + entry.position[1];
                             const id = entry.id;
@@ -123,7 +123,7 @@ export class CSS extends Component {
                             }
 
                             this.caches[id].styles.push({
-                                text: cssText!.slice(start, end),
+                                text: cssText.slice(start, end),
                                 type: type,
                             });
                         });
@@ -366,7 +366,9 @@ export class CSS extends Component {
                 [key in MediaQueryType]?: string
             } = {};
 
-            this.entries.forEach((entry) => {
+            this.entries.sort((a, b) => {
+                return a.id - b.id;
+            }).forEach((entry) => {
                 const cacheEntry = this.caches[entry.id];
 
                 if (cacheEntry) {
