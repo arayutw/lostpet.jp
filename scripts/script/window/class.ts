@@ -1,0 +1,177 @@
+
+import { Factory } from "../factory"
+import { Component } from "../../component"
+import { ServerOptions } from "../script"
+import { CSS } from "../css"
+import { JS } from "../js"
+import { Json2Node } from "../element"
+import { Doc, DocManager } from "../document"
+
+export class Win extends Component {
+    constructor(options: ServerOptions) {
+        super({
+            P: null,
+        });
+
+        this.version = options.version;
+
+        Object.setPrototypeOf(Factory.prototype, {
+            window: this,
+        });
+
+        [
+            CSS,
+            DocManager,
+            Doc,
+            JS,
+            Json2Node,
+        ].forEach((constructor) => {
+            this.factory.create(constructor);
+        });
+
+        this.css = new CSS({ P: this });
+        this.js = new JS({ P: this, });
+        this.document = new DocManager({ P: this });
+        this.element = new Json2Node;
+
+        matchMedia("(prefers-reduced-motion)").addEventListener("change", (event: MediaQueryListEvent) => {
+            const mode = localStorage.getItem("r");
+            const isActive = "2" === mode || ("1" !== mode && event.matches);
+            document.documentElement.classList[isActive ? "add" : "remove"]("r1");
+            this.css.build();
+        }, {
+            passive: true,
+        });
+
+        matchMedia("(prefers-color-scheme:dark)").addEventListener("change", (event: MediaQueryListEvent) => {
+            const mode = localStorage.getItem("t");
+            const isActive = "2" === mode || ("1" !== mode && event.matches);
+            document.documentElement.classList.replace(isActive ? "t1" : "t2", isActive ? "t2" : "t1");
+            this.css.build();
+        }, {
+            passive: true,
+        });
+
+        addEventListener("resize", () => {
+            this.innerHeight = innerHeight;
+            this.innerWidth = innerWidth;
+
+            this.emit("resize");
+        }, {
+            passive: true,
+        });
+
+        this.css.setup()
+            .then(() => {
+                if (this.S) {
+                    this.document.load({
+                        data: options.document,
+                        location: new URL(location.href),
+                        type: 0,
+                    });
+                }
+            })
+            .catch((err) => {
+                if (this.S) {
+                    console.error(err);
+                    this.window!.throw();
+                }
+            });
+    }
+
+    fetch(options: FetchOptions): Promise<any> {
+        let reqBody: any = options.body;
+
+        if (reqBody) {
+            if (reqBody instanceof FormData) {
+                const object = {};
+                reqBody.forEach((value, key) => object[key] = value);
+                reqBody = object;
+            }
+
+            reqBody = JSON.stringify(reqBody);
+        }
+
+        const credentials = options.credentials;
+        const method = options.method;
+        const priority = options.priority;
+        let pathname = "/api/p" + (credentials ? "rivate" : "ublic") + "/" + options.path;
+
+        const requestOptions: {
+            headers: HeadersInit
+            priority: "high" | "low" | "auto"
+        } & RequestInit = {
+            cache: "default",
+            credentials: credentials ? "same-origin" : "omit",
+            headers: {
+                "x-csrf-token": location.hostname,
+            },
+            keepalive: false,
+            method: method,
+            mode: "same-origin",
+            priority: priority || "auto",
+            redirect: "error",
+            referrer: "about:client",
+            referrerPolicy: "same-origin",
+        };
+
+        if ("GET" === method) {
+            if (reqBody) pathname += "?v=" + encodeURIComponent(reqBody);
+            if (!credentials) pathname += (reqBody ? "&" : "?") + "a=" + this.version;
+
+        } else {
+            requestOptions.headers["Content-Type"] = "application/json;charset=utf-8";
+            if (reqBody) requestOptions.body = reqBody;
+        }
+
+        return new Promise((resolve, reject) => {
+            fetch(pathname, requestOptions)
+                .then((res: Response) => {
+                    if (this.S) {
+                        const status = res.ok ? res.status : null;
+
+                        if (200 === status) {
+                            return res.json();
+                        }
+
+                        this.throw();
+                    }
+                })
+                .then((res) => {
+                    if (this.S) {
+                        resolve(res);
+                    }
+                })
+                .catch((err) => {
+                    if (this.S) {
+                        console.error(err);
+                        this.throw();
+                    }
+                })
+                .finally(reject);
+        });
+    }
+
+    throw(): void {
+        this.S = false;
+    }
+
+    innerHeight: number = innerHeight
+    innerWidth: number = innerWidth
+
+    factory: Factory = new Factory
+    version: number = 0
+
+    document: DocManager
+    element: Json2Node
+    css: CSS
+    js: JS
+}
+
+export type FetchOptions = {
+    credentials: boolean
+    body?: { [key: string]: any } | FormData
+    method: "GET" | "POST" | "PATCH"
+    path: string
+    priority?: "high" | "low" | "auto"
+};
