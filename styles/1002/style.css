@@ -1,0 +1,47 @@
+.c2 {
+    background-color: var(--b2);
+    text-align: center;
+    padding: 36px var(--s1);
+    line-height: 1;
+    border-top: 1px solid var(--b3);
+    font-size: .88rem;
+}
+
+.c2a {
+    font-weight: 700;
+    line-height: 1;
+    font-size: .88rem;
+    padding: unset;
+    margin: unset;
+}
+
+.c2b {
+    list-style-type: none;
+    padding: unset;
+    margin: 16px 0 0;
+    display: flex;
+}
+
+.c2c {
+    font-weight: 700;
+    margin-top: 32px;
+}
+
+.c2d {
+    margin-top: 24px;
+}
+
+.c2d1 {
+    font-size: .88rem;
+    color: var(--a3);
+}
+
+.c2e {
+    margin-top: 36px;
+}
+
+.c2e1 {
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
