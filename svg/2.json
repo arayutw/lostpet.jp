@@ -1,0 +1,49 @@
+{
+    "attribute": {
+        "viewBox": "0 0 24 24"
+    },
+    "children": [
+        {
+            "d": "M0 0h24v24H0V0Z",
+            "fill": "#228ae6",
+            "tagName": "path"
+        },
+        {
+            "attribute": {
+                "cx": "6.909",
+                "cy": "9",
+                "r": "3.5",
+                "fill": "#FFF"
+            },
+            "tagName": "circle"
+        },
+        {
+            "attribute": {
+                "cx": "8.786",
+                "cy": "9.159",
+                "r": "1.623",
+                "fill": "#333"
+            },
+            "tagName": "circle"
+        },
+        {
+            "attribute": {
+                "cx": "17.091",
+                "cy": "9",
+                "r": "3.5",
+                "fill": "#FFF"
+            },
+            "tagName": "circle"
+        },
+        {
+            "attribute": {
+                "cx": "18.968",
+                "cy": "9.159",
+                "r": "1.623",
+                "fill": "#333"
+            },
+            "tagName": "circle"
+        }
+    ],
+    "tagName": "svg"
+}
