@@ -1,4 +1,4 @@
-.c2 {
+.c1 {
     border-bottom: 1px solid var(--b3);
     height: 40px;
     display: flex;
@@ -12,18 +12,18 @@
     z-index: 2;
 }
 
-.c2a {
+.c1a {
     width: 24px;
     height: 24px;
     margin-right: auto;
 }
 
-.c2a1 {
+.c1a1 {
     width: 24px;
     height: 24px;
 }
 
-.c2b {
+.c1b {
     height: 32px;
     line-height: 32px;
     padding-left: 16px;
