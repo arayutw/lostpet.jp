@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 foreach ([
     "CloudFront",
+    "Column2Content",
     "CSS",
     "Discord",
     "Document",
@@ -20,6 +21,7 @@ foreach ([
     "Slack",
     "UIFooter",
     "UIHeader",
+    "UIMain",
     "Turnstile",
     "utils",
 ] as $name) {
