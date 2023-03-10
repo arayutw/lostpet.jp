@@ -23,3 +23,5 @@
 /ec2/document/lib/**/.secret
 /ec2/document/scripts/prod
 /ec2/document/styles/prod
+/ec2/document/svg
+
