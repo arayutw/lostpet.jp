@@ -34,9 +34,11 @@ export class JS extends Component {
                             if (module) {
                                 const scriptIds: Array<number> | undefined = module.js;
                                 const styleIds: Array<number> | undefined = module.css;
+                                const svgIds: Array<number> | undefined = module.svg;
 
                                 scriptIds?.forEach((id) => promises.push(this.load(id)));
                                 if (styleIds) promises.push(this.window.css.load(styleIds));
+                                if (svgIds) promises.push(this.window.svg.load(svgIds));
                             }
 
                             return Promise.all(promises);
