@@ -1,0 +1,33 @@
+@media screen and (min-width:1024px) {
+    .c3 {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .c3a {
+        padding-right: 32px;
+        padding-bottom: 128px;
+        padding-left: 32px;
+        width: calc(100% - 304px);
+    }
+
+    .c3at1 {
+        background-color: var(--b2);
+    }
+
+    .c3b {
+        width: 240px;
+    }
+
+    .c3b1 {
+        position: sticky;
+        top: 49px;
+        left: 0;
+        padding-top: 8px;
+    }
+
+    .c3b1b {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
