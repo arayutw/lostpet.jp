@@ -1,0 +1,5 @@
+@media (hover: hover) {
+    .ha2:hover {
+        text-decoration: underline;
+    }
+}
