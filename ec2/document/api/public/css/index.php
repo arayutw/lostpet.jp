@@ -17,6 +17,7 @@ if ($id && $version) {
         Etag::echo();
 
         $json = $row["map"];
+        header("cache-control:max-age=1,public");
         header('content-length:' . strlen($json));
         http_response_code(200);
 
@@ -24,10 +25,6 @@ if ($id && $version) {
 
         exit;
     }
-
-    http_response_code(404);
-
-    exit;
 }
 
 http_response_code(400);
