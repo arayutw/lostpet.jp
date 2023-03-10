@@ -1,0 +1,12 @@
+{
+    "attribute": {
+        "viewBox": "0 0 24 24"
+    },
+    "children": {
+        "attribute": {
+            "d": "m2.8 19.075-2.8-2.8 12-12 12 12-2.8 2.8-9.2-9.2-9.2 9.2Z"
+        },
+        "tagName": "path"
+    },
+    "tagName": "svg"
+}
