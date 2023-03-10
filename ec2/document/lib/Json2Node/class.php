@@ -9,7 +9,7 @@ class Json2Node
         if (null === $options) {
             return '';
         } elseif (is_string($options['tagName'] ?? null)) {
-            return self::convertTo($options);
+            return self::convert($options);
         } elseif (is_iterable($options)) {
             $html = '';
 
@@ -24,7 +24,7 @@ class Json2Node
         return (string)$options;
     }
 
-    static private function convertTo(array $options): string
+    static private function convert(array $options): string
     {
         $tag_name = $options['tagName'] ?? null;
         $attributes = $options['attribute'] ?? null;
