@@ -9,9 +9,9 @@ class UIHeader
 
     static public function create()
     {
-        return '<header class="c2">'
-            . '<a class="c2a" href="/"><picture><source srcset="/logo.svg" media="(min-width: 480px)"><img class="c2a1" src="/icon.svg"></picture></a>'
-            . '<a class="a3 c2b ht1" href="/">サイトに掲載</a>'
+        return '<header class="c1" role="banner">'
+            . '<a class="c1a" href="/"><picture><source srcset="/logo.svg" media="(min-width: 480px)"><img class="c1a1" src="/icon.svg"></picture></a>'
+            . '<a class="a3 c1b ht1" href="/">サイトに掲載</a>'
             . '</header>';
     }
 }
