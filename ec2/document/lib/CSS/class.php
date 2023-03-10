@@ -218,7 +218,7 @@ class CSS
 
             RDS::execute("UPDATE `css` SET `version`=?, `key`=?, `map`=? WHERE `id`=? LIMIT 1;", [
                 $version,
-                $this->filename,
+                $key,
                 json_encode(array_map(fn (array $entry) => [
                     "id" => $entry["id"],
                     "position" => $entry["position"],
