@@ -6,6 +6,8 @@ import { CSS } from "../css"
 import { JS } from "../js"
 import { Json2Node } from "../element"
 import { Doc, DocManager } from "../document"
+import { Me } from "../me"
+import { SVG } from "../svg"
 
 export class Win extends Component {
     constructor(options: ServerOptions) {
@@ -25,13 +27,17 @@ export class Win extends Component {
             Doc,
             JS,
             Json2Node,
+            Me,
+            SVG,
         ].forEach((constructor) => {
             this.factory.create(constructor);
         });
 
         this.css = new CSS({ P: this });
         this.js = new JS({ P: this, });
+        this.svg = new SVG({ P: this, });
         this.document = new DocManager({ P: this });
+        this.me = new Me({ P: this });
         this.element = new Json2Node;
 
         matchMedia("(prefers-reduced-motion)").addEventListener("change", (event: MediaQueryListEvent) => {
@@ -61,12 +67,19 @@ export class Win extends Component {
             passive: true,
         });
 
-        this.css.setup()
+        Promise.all([
+            this.css.setup(),
+            this.me.update(),
+        ])
             .then(() => {
                 if (this.S) {
                     this.document.load({
                         data: options.document,
                         location: new URL(location.href),
+                        scroll: {
+                            left: scrollX,
+                            top: scrollY,
+                        },
                         type: 0,
                     });
                 }
@@ -166,6 +179,8 @@ export class Win extends Component {
     element: Json2Node
     css: CSS
     js: JS
+    svg: SVG
+    me: Me
 }
 
 export type FetchOptions = {
