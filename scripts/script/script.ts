@@ -1,6 +1,6 @@
 import { Win } from "./window"
 import { features } from "./factory"
-import { SSRDocumentData } from "./document"
+import { DocumentData } from "./document"
 
 declare global {
   var a: ServerOptions | undefined
@@ -8,7 +8,7 @@ declare global {
 }
 
 export type ServerOptions = {
-  document: SSRDocumentData
+  document: DocumentData
   version: number
 }
 
