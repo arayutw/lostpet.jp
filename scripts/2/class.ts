@@ -1,7 +1,7 @@
 import { Component, InitOptions } from "../component";
 
 export class UIHeader extends Component {
-    element: HTMLElement | null = null
+    element!: HTMLElement
 
     constructor(options: InitOptions & {
         element: HTMLElement | null
@@ -12,17 +12,18 @@ export class UIHeader extends Component {
         });
 
         if (!this.element) {
-            this.element = this.create();
+            this.create();
         }
     }
 
 
-    create(): HTMLElement {
+    private create(): void {
         const headerE = this.element = document.createElement("header");
-        headerE.className = "c2";
+        headerE.className = "c1";
+        headerE.role = "banner";
 
         const aE1 = document.createElement("a");
-        aE1.className = "c2a";
+        aE1.className = "c1a";
         aE1.href = "/";
 
         const pictureE = document.createElement("picture");
@@ -32,19 +33,19 @@ export class UIHeader extends Component {
         sourceE.media = "(min-width: 480px)";
 
         const imgE = new Image;
-        imgE.className = "c2a1";
+        imgE.className = "c1a1";
         imgE.src = "/icon.svg";
 
         pictureE.append(sourceE, imgE);
         aE1.appendChild(pictureE);
 
         const aE2 = document.createElement("a");
-        aE2.className = "a3 c2b ht1";
+        aE2.className = "a3 c1b ht1";
         aE2.href = "/";
         aE2.textContent = "サイトに掲載";
 
-        headerE.append(aE1, aE2);
+        this.window.document.attach(aE2);
 
-        return headerE;
+        headerE.append(aE1, aE2);
     }
 }
