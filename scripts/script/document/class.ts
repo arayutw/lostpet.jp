@@ -1,28 +1,14 @@
 import { Component, InitOptions } from "../../component"
 import { Content, ContentData } from "../content"
-import { ElementUnit } from "../element"
-
-
-/*
-preload
-load
-reload
-
-{
-    id: 1
-    data: {}    
-}
-
-1.jsを読み込み、new Constructor(data)を実行する。
-*/
 
 /**
  * 0: SSR
  * 1: click
  * 2: popstate
  * 3: reload
+ * 4: api (default)
  */
-type Type = 0 | 1 | 2 | 3
+type TransitionType = 0 | 1 | 2 | 3 | 4
 
 export type DocumentData = {
     id: number
@@ -40,7 +26,7 @@ type Caches = {
 type CreateOptions = {
     scroll?: ScrollToOptions
     location: URL
-    type: Type
+    type: TransitionType
 }
 
 type LoadOptions = CreateOptions & {
@@ -60,8 +46,6 @@ export class DocManager extends Component {
 
     private eventListeners: [EventListener, EventListener] = [
         (event: Event) => {
-            console.log("click:", this);
-
             const aE = event.currentTarget as HTMLAnchorElement;
             const doc = this.history[0];
 
@@ -92,8 +76,6 @@ export class DocManager extends Component {
         },
 
         (event: Event) => {
-            console.log("mouseover:", this);
-
             const aE = event.currentTarget as HTMLAnchorElement;
             const pathname = aE.pathname;
             const search = aE.search;
@@ -135,6 +117,17 @@ export class DocManager extends Component {
         super({
             P: options.P,
         });
+
+        addEventListener("popstate", (event) => {
+            event.preventDefault();
+
+            this.load({
+                location: new URL(location.href),
+                type: 2,
+            });
+        }, {
+            passive: false,
+        });
     }
 
     reload(options: {
@@ -151,14 +144,15 @@ export class DocManager extends Component {
     }
 
     load(options: LoadOptions): void {
-        /* */
         const http = 1 & this.flag;
 
         const newLoc = options.location;
         const newSearch = newLoc.search;
         const newPathname = newLoc.pathname;
 
-        history[(http ? "replace" : "push") + "State"](null, document.title, "https://" + location.hostname + newPathname + newSearch + newLoc.hash);
+        if (http || 4 === options.type) {
+            history[(http ? "replace" : "push") + "State"](null, document.title, "https://" + location.hostname + newPathname + newSearch + newLoc.hash);
+        }
 
         if (http) {
             location.reload();
@@ -253,7 +247,7 @@ export class Doc extends Component {
     location!: URL
     scroll!: ScrollOptions | null
     declare P: DocManager
-    type!: Type
+    type!: TransitionType
 
     constructor(options: CreateOptions & InitOptions) {
         super({
@@ -285,67 +279,33 @@ export class Doc extends Component {
                     if (this.S && docManager.history[0] === this) {
                         const oldContent = docManager.content;
 
-                        docManager.content = this.content = oldContent?.id === data.id ? oldContent : new (this.window!.js.get(data.id))({
-                            document: this,
+                        const newContent = docManager.content = this.content = oldContent?.id === data.id ? oldContent : new (this.window!.js.get(data.id))({
                             id: data.id,
                             P: docManager,
                         });
 
+                        newContent.document = this;
+
                         return Promise.all([
                             data,
-                            this.content!.create(data.data),
+                            newContent.create(data.data),
                         ]);
                     }
                 })
                 .then((response) => {
                     if (this.S && docManager.history[0] === this && response) {
-                        // update head
-                        const data = response[0];
+                        // update head (全ての値を信用していい)
 
-                        if (this.type) {
-                            const newHead = data.head!;
+                        console.log("heads", response[0].head);
 
-                            [
-                                {
-                                    attribute: {
-                                        content: "/icon.png",
-                                        property: "og:image",
-                                    },
-                                    tagName: "meta"
-                                },
-                                {
-                                    attribute: {
-                                        content: "image/png",
-                                        property: "og:image:type",
-                                    },
-                                    tagName: "meta"
-                                },
-                                {
-                                    attribute: {
-                                        content: "2000",
-                                        property: "og:image:height",
-                                    },
-                                    tagName: "meta"
-                                },
-                                {
-                                    attribute: {
-                                        content: "2000",
-                                        property: "og:image:width",
-                                    },
-                                    tagName: "meta"
-                                },
-                            ].forEach((unit1) => {
-                                for (let i = 0; newHead.length > i; i++) {
-                                    const unit2 = newHead[i];
-
-                                    if ("meta" === unit2.tagName) {
-
-                                    }
-                                }
-
+                        if ([1, 3, 4,].indexOf(this.type) > -1) {
+                            scrollTo(this.scroll || {
+                                left: 0,
+                                top: 0,
                             });
-
                         }
+
+                        document.documentElement.classList.remove("h");
 
                         resolve();
                     }
