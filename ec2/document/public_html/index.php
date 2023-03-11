@@ -136,25 +136,6 @@ if (1 === _REQUEST_) {
 
         array_pop($tokens);
     }
-
-    /*
-
-    Etag::echo();
-
-    $json = json_encode(Document::$body);
-
-    if (1024 > strlen($json)) {
-        $json = gzencode($json, 4);
-        header('content-encoding:gzip');
-    }
-
-    header('cache-control:max-age=' . Document::$cache_time . ',public,immutable');
-    header('content-length:' . strlen($json));
-    header('x-robots-tag:noindex');
-    http_response_code(200);
-
-    echo $json;
-    */
 }
 
 exit;
