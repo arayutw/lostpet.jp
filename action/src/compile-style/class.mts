@@ -4,6 +4,7 @@ import fs from "fs"
 import postcss from "postcss";
 import cssnano from "cssnano"
 import postcssImport from "postcss-import"
+import autoprefixer from "autoprefixer"
 
 
 
@@ -33,6 +34,7 @@ export class CompileStyle {
         if (true === envJson.ready) {
           postcss([
             cssnano(),
+            autoprefixer(),
           ])
             .use(postcssImport())
             .process(fs.readFileSync(inputPath, 'utf8'), {
