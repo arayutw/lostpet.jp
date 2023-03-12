@@ -1,0 +1,10 @@
+@media screen and (min-width:1024px) {
+    .c4 {
+        background-color: var(--b1);
+        border-radius: 16px;
+        padding: 48px;
+        max-width: calc(1024px - 48px - 48px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
