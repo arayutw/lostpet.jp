@@ -1,3 +1,4 @@
+import { dependenciesStyleIds } from ".";
 import { Component, InitOptions } from "../component";
 
 type UpdateOptions = {
@@ -20,16 +21,21 @@ export class UIMain extends Component {
             ui: {},
         });
 
-        this.create();
-    }
-
-    private create(): void {
         if (this.element) {
             this.ui.main = this.element.getElementsByTagName("main")[0];
             this.ui.side = this.element.getElementsByTagName("nav")[0];
-            return;
+
+        } else {
+            this.create();
+
         }
 
+        this.window.css.attach(this, dependenciesStyleIds);
+
+        this.window.document.attach(this.element);
+    }
+
+    private create(): void {
         const containerE = this.element = document.createElement("div");
 
         /* main */
@@ -49,6 +55,19 @@ export class UIMain extends Component {
         sideHeadingE.className = "c3b1a";
         sideHeadingE.textContent = "メニュー";
 
+        const func1 = ([text, slug, svg,]: [string, string, number,]) => {
+            const aE = document.createElement("a");
+            aE.className = "a2 c3b1b2a hb2";
+            aE.href = slug;
+
+            const svgJson = this.window.svg.get(svg);
+            svgJson.attribute!.className = "c3b1b2at3";
+            svgJson.children![0].attribute!.className = "c3b1b2at3a";
+
+            aE.append(this.window.element.create(svgJson), text);
+            return aE;
+        };
+
         sideInnerDivE.append(
             sideHeadingE,
             this.createSideContainer("検索", false, ([
@@ -64,18 +83,12 @@ export class UIMain extends Component {
             this.createSideContainer("お役立ち", false, ([
                 ["掲載", "/search/new", 4,],
                 ["ポスター", "/poster", 3,],
-            ] as Array<[string, string, number]>).map(([text, slug, svg,]) => {
-                const aE = document.createElement("a");
-                aE.className = "a2 c3b1b2a hb2";
-                aE.href = "/search/" + slug;
-
-                const svgJson = this.window.svg.get(svg);
-                svgJson.attribute!.className = "c3b1b2at3";
-                svgJson.children![0].attribute!.className = "c3b1b2at3a";
-
-                aE.append(this.window.element.create(svgJson), text);
-                return aE;
-            })),
+            ] as Array<[string, string, number]>).map(func1)),
+            this.createSideContainer("案内", false, ([
+                ["利用規約", "/terms", 6,],
+                ["プライバシーポリシー", "/privacy", 7,],
+                ["問い合わせ", "/contact", 8,],
+            ] as Array<[string, string, number]>).map(func1)),
             this.createSideContainer("環境設定", false, ([
                 ["カラーモード", 5,],
             ] as Array<[string, number]>).map(([text, svg,]) => {
@@ -97,8 +110,6 @@ export class UIMain extends Component {
                 return aE;
             })),
         );
-
-        this.window.document.attach(sideE);
 
         containerE.append(mainE, sideE);
     }
@@ -125,8 +136,8 @@ export class UIMain extends Component {
         mainE.className = "c3a" + (options.background ? (" c3at" + options.background) : "");
         if (options.body) mainE.replaceChildren(this.window.element.create(options.body));
 
-        this.window.document.attach(mainE);
-
         /* side nav */
+
+        this.window.document.attach(mainE);
     }
 }
