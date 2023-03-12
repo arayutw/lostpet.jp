@@ -27,7 +27,9 @@ type PopupItemConfirm = (options: {
 }) => void
 
 type CommonOptions = {
-    css: StyleIds
+    css?: StyleIds
+    svg?: SVGIds
+    feature?: number
     id: string | number
 }
 
@@ -36,8 +38,6 @@ type Options1 = CommonOptions & {
     align?: 0 | 1 | 2 | 3 | 4
     animation?: boolean
     confirm?: PopupItemConfirm
-    css?: StyleIds
-    feature: number
     layer?: Component
     position?: 0 | 1 | 2 | 3 | 4
     target: HTMLElement
@@ -47,13 +47,17 @@ type Options1 = CommonOptions & {
 // for toast
 type Options2 = CommonOptions & {
     color: "n" | "p" | "w" | "i"
-    feature: number
     expires?: number
     text: any
     type: "toast"
 }
 
-export type PopupItemOptions = InitOptions & (Options1 | Options2);
+// for menu
+type Options3 = CommonOptions & {
+    type: "menu"
+}
+
+export type PopupItemOptions = InitOptions & (Options1 | Options2 | Options3);
 
 export class PopupItem extends Component {
     align: 0 | 1 | 2 | 3 | 4 = 0
@@ -96,9 +100,11 @@ export class PopupItem extends Component {
         this.feature = "number" === typeof options.feature ? options.feature : (1 | 2 | 4);
 
         const color = options.color;
+        const disabledAnimate = false === options.animation;
 
         const type = options.type;
         const isToast = "toast" === type;
+        const isMenu = "menu" === type;
 
         const cssToken = "u" + Math.random().toString(32).substring(2) + Date.now();
 
@@ -130,13 +136,17 @@ export class PopupItem extends Component {
 
         if (closeButtonAE) styleIds.push(107);
 
+        if (isMenu) {
+            styleIds.push(106, 107, 1007);
+
+        }
+
         if (isToast) {
             this.feature |= 8;
+            styleIds.push(1008);
 
             const textOptions = options.text;
             let children: Array<any> = [];
-
-            styleIds.push(1008);
 
             if (textOptions) {
                 for (let a = Array.isArray(textOptions) ? textOptions : [textOptions,], i = 0; a.length > i; i++) {
@@ -168,7 +178,7 @@ export class PopupItem extends Component {
                 this.align = options.align;
             }
 
-            if (3 !== options.position || 0 === options.position) {
+            if (0 === options.position || options.position) {
                 this.position = options.position;
             }
         }
@@ -187,6 +197,16 @@ export class PopupItem extends Component {
 
         const contentE = rootE.firstChild as HTMLElement;
 
+        if (isMenu) {
+            if (this.width) {
+                contentE.classList.add("c7sw");
+            }
+
+            if (!disabledAnimate) {
+                contentE.classList.add("c7sp");
+            }
+        }
+
         Promise.all([
             css.load([
                 ...styleIds,
@@ -195,6 +215,7 @@ export class PopupItem extends Component {
             svg.load([
                 10,
                 ...svgIds,
+                ...(options.svg ? options.svg : []),
             ]),
         ])
             .then(([styleIds, svgNodes]: [StyleIds, ElementUnit[]]) => {
@@ -235,6 +256,12 @@ export class PopupItem extends Component {
                     }));
 
                     rootE.appendChild(closeButtonAE!);
+                } else if (isMenu) {
+                    if (!disabledAnimate) {
+                        setTimeout(() => {
+                            (rootE.firstChild as HTMLDivElement).classList.remove(isMenu ? "c7sp" : "c17p");
+                        }, 8);
+                    }
                 }
 
                 document.body.appendChild(rootE);
@@ -389,3 +416,4 @@ export class PopupItem extends Component {
         }
     }
 }
+
