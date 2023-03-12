@@ -6,7 +6,6 @@
 
     .c3a {
         padding-right: 32px;
-        padding-bottom: 128px;
         padding-left: 32px;
         width: calc(100% - 304px);
     }
@@ -29,5 +28,11 @@
     .c3b1b {
         padding-left: 16px;
         padding-right: 16px;
+    }
+
+    .c3b1b2a {
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: .9rem;
     }
 }
