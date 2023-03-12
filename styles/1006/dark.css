@@ -1,0 +1,6 @@
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --c6a: unset;
+        --c6b: 1px solid var(--b6);
+    }
+}
