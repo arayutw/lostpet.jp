@@ -1,0 +1,15 @@
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --c8ap: #BCF0DA;
+        --c8ap1: #03543F;
+
+        --c8an: #fee2e2;
+        --c8an1: #771D1D;
+
+        --c8aw: #ffedd5;
+        --c8aw1: #7c2d12;
+
+        --c8ai: #dbeafe;
+        --c8ai1: #1e3a8a;
+    }
+}
