@@ -4,8 +4,40 @@ declare(strict_types=1);
 
 class Head
 {
-    static public function create(array $head): string
+    static public function create(array $head): array
     {
+        $head = self::merge($head, [
+            [
+                "attribute" => [
+                    "content" => "/icon.png",
+                    "property" => "og:image",
+                ],
+                "tagName" => "meta",
+            ],
+            [
+                "attribute" => [
+                    "content" => "image/png",
+                    "property" => "og:image:type",
+                ],
+                "tagName" => "meta",
+            ],
+            [
+                "attribute" => [
+                    "content" => "2000",
+                    "property" => "og:image:height",
+                ],
+                "tagName" => "meta",
+            ],
+            [
+                "attribute" => [
+                    "content" => "2000",
+                    "property" => "og:image:width",
+                ],
+                "tagName" => "meta",
+            ],
+        ], false);
+
+
         foreach ([
             [
                 [
@@ -49,15 +81,15 @@ class Head
             [
                 [
                     "meta",
-                    "name",
-                    "twitter:description",
+                    "property",
+                    "og:url",
                     "content",
                 ],
                 [
-                    "meta",
-                    "property",
-                    "og:description",
-                    "content",
+                    "link",
+                    "rel",
+                    "canonical",
+                    "href",
                 ],
             ],
         ] as [$target, $ref,]) {
@@ -107,8 +139,11 @@ class Head
             }
         }
 
+        return $head;
+    }
 
-
+    static public function html(array $head): string
+    {
         return Json2Node::create(array_filter(
             self::merge([
                 [
@@ -258,34 +293,6 @@ class Head
                         "rel" => "manifest",
                     ],
                     "tagName" => "link",
-                ],
-                [
-                    "attribute" => [
-                        "content" => "/icon.png",
-                        "property" => "og:image",
-                    ],
-                    "tagName" => "meta",
-                ],
-                [
-                    "attribute" => [
-                        "content" => "image/png",
-                        "property" => "og:image:type",
-                    ],
-                    "tagName" => "meta",
-                ],
-                [
-                    "attribute" => [
-                        "content" => "2000",
-                        "property" => "og:image:height",
-                    ],
-                    "tagName" => "meta",
-                ],
-                [
-                    "attribute" => [
-                        "content" => "2000",
-                        "property" => "og:image:width",
-                    ],
-                    "tagName" => "meta",
                 ],
             ], $head, true),
             fn (array $entry) => !(("link" === $entry["tagName"] && is_null($entry["attribute"]["href"])) || ("meta" === $entry["tagName"] && isset($entry["attribute"]["content"]) && is_null($entry["attribute"]["content"])))
