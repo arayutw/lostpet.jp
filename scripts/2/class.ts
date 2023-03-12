@@ -1,3 +1,4 @@
+import { dependenciesStyleIds } from ".";
 import { Component, InitOptions } from "../component";
 
 export class UIHeader extends Component {
@@ -14,6 +15,10 @@ export class UIHeader extends Component {
         if (!this.element) {
             this.create();
         }
+
+        this.window.css.attach(this, dependenciesStyleIds);
+
+        this.window.document.attach(this.element);
     }
 
 
@@ -43,8 +48,6 @@ export class UIHeader extends Component {
         aE2.className = "a3 c1b ht1";
         aE2.href = "/";
         aE2.textContent = "サイトに掲載";
-
-        this.window.document.attach(aE2);
 
         headerE.append(aE1, aE2);
     }
