@@ -47,7 +47,7 @@ class Column2Content
             .   '<link as="style" href="' . $css->href . '" rel="preload">'
             // .   implode("", array_map(fn (int $id) => '<link as="style" href="/styles/' . $id . '.css?v=' . _VERSION_ . '" rel="preload">', $this->css))
             .   '<link as="script" href="/script.js?v=' . _VERSION_ . '" rel="preload">'
-            .   Head::create($this->head)
+            .   Head::html(Head::create($this->head))
             .   '<link href="' . $css->href . '" rel="stylesheet">'
             .   '<script>'
             .       '(function(){var t;("2"===(t=localStorage.getItem("t"))||"1"!==t&&matchMedia("(prefers-color-scheme:dark)").matches)&&document.documentElement.classList.replace("t1","t2"),("2"===(t=localStorage.getItem("r"))||"1"!==t&&matchMedia("(prefers-reduced-motion)").matches)&&document.documentElement.classList.add("r2")}())'
@@ -85,7 +85,7 @@ class Column2Content
     public function json()
     {
         $json = json_encode([
-            "head" => $this->head,
+            "head" => Head::create($this->head),
             "id" => 1,
             "data" => [
                 "body" => $this->body,
