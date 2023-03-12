@@ -1,0 +1,14 @@
+.c5a {
+    font-size: 2rem;
+    margin: unset;
+}
+
+.c5b {
+    font-size: 1.5rem;
+    padding-bottom: .3em;
+    border-bottom: 1px solid var(--b3);
+}
+
+.c5c {
+    margin-bottom: 32px;
+}
