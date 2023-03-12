@@ -1,5 +1,6 @@
 import { Component, InitOptions } from "../../component"
 import { Content, ContentData } from "../content"
+import { ElementUnit } from "../element"
 
 /**
  * 0: SSR
@@ -87,7 +88,12 @@ export class DocManager extends Component {
                     cache: true,
                     data: null,
                     location: new URL(aE.href),
-                });
+                })
+                    .catch((err) => {
+                        if (this.S) {
+                            console.error(err);
+                        }
+                    });
             }
         },
     ]
@@ -258,59 +264,79 @@ export class Doc extends Component {
         });
     }
 
-    render(data: DocumentData | null): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const docManager = this.P;
-            const loc = this.location;
-            const type = this.type;
+    render(data: DocumentData | null): void {
 
-            if (2 === this.type && !docManager.caches[loc.pathname + loc.search]) {
-                document.documentElement.classList.add("h");
-            }
+        const docManager = this.P;
+        const loc = this.location;
+        const type = this.type;
 
-            docManager.preload({
-                cache: 2 === type ? true : null,
-                data: data,
-                location: loc,
+        if (2 === this.type && !docManager.caches[loc.pathname + loc.search]) {
+            document.documentElement.classList.add("h");
+        }
+
+        docManager.preload({
+            cache: 2 === type ? true : null,
+            data: data,
+            location: loc,
+        })
+            .then((data) => {
+                if (this.S && docManager.history[0] === this) {
+                    const oldContent = docManager.content;
+
+                    const newContent = docManager.content = this.content = oldContent?.id === data.id ? oldContent : new (this.window!.js.get(data.id))({
+                        id: data.id,
+                        P: docManager,
+                    });
+
+                    newContent.document = this;
+
+                    return Promise.all([
+                        data,
+                        newContent.create(data.data),
+                    ]);
+                }
             })
-                .then((data) => {
-                    const docManager = this.P;
+            .then((response) => {
+                if (this.S && docManager.history[0] === this && response) {
+                    response[0].head?.forEach((unit: ElementUnit) => {
+                        const tag = unit.tagName;
+                        const attrs = unit.attribute!;
 
-                    if (this.S && docManager.history[0] === this) {
-                        const oldContent = docManager.content;
+                        if ("title" === tag) {
+                            document.title = unit.children;
+                        } else {
+                            const isMeta = "meta" === tag;
+                            const isProperty = isMeta ? attrs.property : false;
 
-                        const newContent = docManager.content = this.content = oldContent?.id === data.id ? oldContent : new (this.window!.js.get(data.id))({
-                            id: data.id,
-                            P: docManager,
-                        });
+                            const el = document.head.querySelector(tag + "[" + (isMeta ? (isProperty ? "property" : "name") : "rel") + "='" + attrs[(isMeta ? (isProperty ? "property" : "name") : "rel")] + "']") as HTMLMetaElement | HTMLLinkElement | null;
 
-                        newContent.document = this;
-
-                        return Promise.all([
-                            data,
-                            newContent.create(data.data),
-                        ]);
-                    }
-                })
-                .then((response) => {
-                    if (this.S && docManager.history[0] === this && response) {
-                        // update head (全ての値を信用していい)
-
-                        console.log("heads", response[0].head);
-
-                        if ([1, 3, 4,].indexOf(this.type) > -1) {
-                            scrollTo(this.scroll || {
-                                left: 0,
-                                top: 0,
-                            });
+                            if (el) {
+                                const property = isMeta ? "content" : "href";
+                                el[property] = attrs[property];
+                            }
                         }
+                    });
 
-                        document.documentElement.classList.remove("h");
-
-                        resolve();
+                    if ([1, 3, 4,].indexOf(type) > -1) {
+                        scrollTo(this.scroll || {
+                            left: 0,
+                            top: 0,
+                        });
                     }
-                });
-        });
+
+                    if (0 === type) {
+                        document.head.querySelector("link[href^='/styles/i']")?.remove();
+                    }
+
+                    document.documentElement.classList.remove("h");
+                }
+            })
+            .catch((err) => {
+                if (this.S) {
+                    console.error(err);
+                    this.window.throw();
+                }
+            });
     }
 }
 
