@@ -1,0 +1,6 @@
+@media screen and (max-width:1023px) {
+    .c4 {
+        margin-left: var(--s1);
+        margin-right: var(--s1);
+    }
+}
