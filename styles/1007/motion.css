@@ -1,0 +1,10 @@
+@media (prefers-reduced-motion: no-preference) {
+    .c7 {
+        transition: margin-top .15s, opacity .15s;
+    }
+
+    .c7sp {
+        margin-top: -8px;
+        opacity: 0;
+    }
+}
