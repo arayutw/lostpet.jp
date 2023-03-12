@@ -1,0 +1,6 @@
+@media (prefers-color-scheme: light) {
+    .t1 {
+        --c6a: 0 2px 6px 2px rgb(60 64 67 / 15%);
+        --c6b: unset;
+    }
+}
