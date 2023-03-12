@@ -2,6 +2,11 @@ import { Component, InitOptions } from "../component";
 import { PopupItem, PopupItemOptions } from "./item";
 import { PopupLayer } from "./layer";
 
+export type PopupCloseOptions = {
+    annotation?: number
+    layer?: Component
+}
+
 export class Popup extends Component {
     readonly items: PopupItem[] = []
 
@@ -156,10 +161,7 @@ export class Popup extends Component {
     }
 
 
-    close(options?: {
-        annotation?: number
-        layer?: Component
-    }): void {
+    close(options?: PopupCloseOptions): void {
         const annotation = options ? options.annotation : 0;
         const layerHint = options ? options.layer : null;
         const parentLayer = layerHint ? this.findLayer(layerHint) : null;
