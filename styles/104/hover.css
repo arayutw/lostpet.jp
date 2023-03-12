@@ -1,0 +1,5 @@
+@media (hover: hover) {
+    .a1:hover {
+        color: var(--a5h);
+    }
+}
