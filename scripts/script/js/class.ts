@@ -1,4 +1,5 @@
 import { Component, ExtendsTarget, InitOptions } from "../../component";
+import { Module } from "../../component/module";
 
 export type ScriptId = number
 export type ScriptIds = Array<ScriptId>
@@ -45,7 +46,7 @@ export class JS extends Component {
                         })
                         .then((res) => {
                             const promises: Array<any> = [];
-                            const module = res[0];
+                            const module = res[0] as Module;
 
                             if (module) {
                                 let component: any;
