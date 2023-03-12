@@ -1,3 +1,4 @@
+import { dependenciesStyleIds } from ".";
 import { Component, InitOptions } from "../component";
 
 export class UIFooter extends Component {
@@ -14,6 +15,10 @@ export class UIFooter extends Component {
         if (!this.element) {
             this.create();
         }
+
+        this.window.css.attach(this, dependenciesStyleIds);
+
+        this.window.document.attach(this.element);
     }
 
     private create(): void {
