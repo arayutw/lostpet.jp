@@ -1,0 +1,59 @@
+.c8 {
+    width: min(414px, 100% - 82px);
+    position: fixed;
+    bottom: 32px;
+    border: var(--c7b);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px 32px;
+    box-shadow: var(--c7a);
+    border-radius: 6px;
+    background-color: var(--b1);
+    font-size: .9rem;
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+}
+
+.c8a {
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.c8b {
+    padding: 12px;
+    border-radius: 6px;
+    margin-left: auto;
+}
+
+.c8ap {
+    background-color: var(--c8ap);
+}
+
+.c8ap1 {
+    fill: var(--c8ap1);
+}
+
+.c8an {
+    background-color: var(--c8an);
+}
+
+.c8an1 {
+    fill: var(--c8an1);
+}
+
+.c8aw {
+    background-color: var(--c8aw);
+}
+
+.c8aw1 {
+    fill: var(--c8aw1);
+}
+
+.c8ai {
+    background-color: var(--c8ai);
+}
+
+.c8ai1 {
+    fill: var(--c8ai1);
+}
