@@ -235,13 +235,11 @@ $client->body = [
 header('cache-control:max-age=1,public,immutable');
 
 if (1 === _REQUEST_) {
-    // header('x-robots-tag:noindex');
-
     $client->schema[0]["itemListElement"][] = [
         "@type" => "ListItem",
         "position" => 2,
-        "name" => "利用規約",
-        "item" => "https://" . _DOMAIN_ . "/terms",
+        "name" => "プライバシーポリシー",
+        "item" => "https://" . _DOMAIN_ . "/privacy",
     ];
 
     $client->html();
