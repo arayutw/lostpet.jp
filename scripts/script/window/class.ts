@@ -1,6 +1,6 @@
 
 import { Factory } from "../factory"
-import { Component } from "../../component"
+import { Component, InitOptions } from "../../component"
 import { ServerOptions } from "../script"
 import { CSS } from "../css"
 import { JS } from "../js"
@@ -8,6 +8,8 @@ import { Json2Node } from "../element"
 import { Doc, DocManager } from "../document"
 import { Me } from "../me"
 import { SVG } from "../svg"
+import { Popup } from "../../8/class"
+import { PopupItem, PopupItemOptions } from "../../8/item"
 
 export class Win extends Component {
     constructor(options: ServerOptions) {
@@ -146,28 +148,22 @@ export class Win extends Component {
                         if (200 === status) {
                             return res.json();
                         }
-
-                        this.throw();
                     }
                 })
-                .then((res) => {
-                    if (this.S) {
-                        resolve(res);
-                    }
-                })
-                .catch((err) => {
-                    if (this.S) {
-                        console.error(err);
-                        this.throw();
-                    }
-                })
+                .then(resolve)
                 .finally(reject);
         });
     }
 
     throw(): void {
+        console.log("window: throw");
+
         this.S = false;
     }
+
+    caches: { [key: string]: any } & {
+        popup?: Popup
+    } = {}
 
     innerHeight: number = innerHeight
     innerWidth: number = innerWidth
@@ -181,6 +177,26 @@ export class Win extends Component {
     js: JS
     svg: SVG
     me: Me
+
+    dialog = {
+        create: (options: InitOptions): Promise<PopupItem> => {
+            return new Promise<PopupItem>((resolve, reject) => {
+                (this.caches.dialog ? Promise.resolve(this.caches.dialog) : this.js.load(9))
+                    .then(() => this.caches.dialog!.create(options))
+                    .then(resolve)
+                    .catch(reject);
+            });
+        },
+    }
+    popup = {
+        create: (options: PopupItemOptions): Promise<PopupItem> => {
+            return new Promise<PopupItem>((resolve, reject) => {
+                (this.caches.popup ? Promise.resolve(this.caches.popup) : this.js.load(8))
+                    .then(() => resolve(this.caches.popup!.create(options)))
+                    .catch(reject);
+            });
+        },
+    }
 }
 
 export type FetchOptions = {
