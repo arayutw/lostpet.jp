@@ -1,0 +1,10 @@
+@media (prefers-reduced-motion: no-preference) {
+    .c8 {
+        transition: opacity .15s, bottom .15s;
+    }
+
+    .c8p {
+        opacity: 0;
+        bottom: 0;
+    }
+}
