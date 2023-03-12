@@ -8,7 +8,7 @@ import { Json2Node } from "../element"
 import { Doc, DocManager } from "../document"
 import { Me } from "../me"
 import { SVG } from "../svg"
-import { Popup } from "../../8/class"
+import { Popup, PopupCloseOptions } from "../../8/class"
 import { PopupItem, PopupItemOptions } from "../../8/item"
 
 export class Win extends Component {
@@ -51,12 +51,7 @@ export class Win extends Component {
             passive: true,
         });
 
-        matchMedia("(prefers-color-scheme:dark)").addEventListener("change", (event: MediaQueryListEvent) => {
-            const mode = localStorage.getItem("t");
-            const isActive = "2" === mode || ("1" !== mode && event.matches);
-            document.documentElement.classList.replace(isActive ? "t1" : "t2", isActive ? "t2" : "t1");
-            this.css.build();
-        }, {
+        matchMedia("(prefers-color-scheme:dark)").addEventListener("change", (event: MediaQueryListEvent) => this.colorScheme.update(event.matches), {
             passive: true,
         });
 
@@ -178,6 +173,14 @@ export class Win extends Component {
     svg: SVG
     me: Me
 
+    colorScheme = {
+        update: (matches?: boolean) => {
+            const mode = localStorage.getItem("t");
+            const isActive = "2" === mode || ("1" !== mode && ("boolean" === typeof matches ? matches : matchMedia("(prefers-color-scheme:dark)").matches));
+            document.documentElement.classList.replace(isActive ? "t1" : "t2", isActive ? "t2" : "t1");
+            this.css.build();
+        }
+    }
     dialog = {
         create: (options: InitOptions): Promise<PopupItem> => {
             return new Promise<PopupItem>((resolve, reject) => {
@@ -189,6 +192,15 @@ export class Win extends Component {
         },
     }
     popup = {
+        attach: (element: HTMLAnchorElement, listener: EventListener) => {
+            element.addEventListener("click", listener, {
+                passive: true,
+            });
+
+            element.addEventListener("mousedown", (event: Event) => event.stopPropagation(), { passive: true, });
+
+            element.addEventListener("touchstart", (event: Event) => event.stopPropagation(), { passive: true, });
+        },
         create: (options: PopupItemOptions): Promise<PopupItem> => {
             return new Promise<PopupItem>((resolve, reject) => {
                 (this.caches.popup ? Promise.resolve(this.caches.popup) : this.js.load(8))
@@ -196,6 +208,9 @@ export class Win extends Component {
                     .catch(reject);
             });
         },
+        close: (options?: PopupCloseOptions) => {
+            this.caches.popup?.close(options);
+        }
     }
 }
 
