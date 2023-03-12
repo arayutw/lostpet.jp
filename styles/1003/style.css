@@ -44,11 +44,11 @@
 .c3b1b2a {
     height: 40px;
     line-height: 40px;
-    padding-left: 16px;
-    padding-right: 16px;
     border-radius: 4px;
     display: flex;
     align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .c3b1b2at1::before {
