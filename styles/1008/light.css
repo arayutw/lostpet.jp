@@ -1,0 +1,15 @@
+@media (prefers-color-scheme: light) {
+    .t1 {
+        --c8ap: #DEF7EC;
+        --c8ap1: #014737;
+
+        --c8an: #FDE8E8;
+        --c8an1: #991b1b;
+
+        --c8aw: #feecdc;
+        --c8aw1: #9a3412;
+
+        --c8ai: #eff6ff;
+        --c8ai1: #1e40af;
+    }
+}
