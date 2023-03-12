@@ -301,8 +301,6 @@ $client->body = [
 header('cache-control:max-age=1,public,immutable');
 
 if (1 === _REQUEST_) {
-    // header('x-robots-tag:noindex');
-
     $client->schema[0]["itemListElement"][] = [
         "@type" => "ListItem",
         "position" => 2,
