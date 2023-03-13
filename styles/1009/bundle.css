@@ -2,6 +2,22 @@
     display: block;
     font-size: .88rem;
     font-weight: 700;
+    line-height: 1.25em;
+    margin-bottom: .5em;
 }
 
-.c9 {}
+.c9c {
+    margin-bottom: 32px;
+}
+
+.c9h {
+    text-align: center;
+    font-size: 2rem;
+    margin: unset;
+}
+
+.c9f {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+}
