@@ -1,0 +1,6 @@
+@media screen and (min-width:360px) {
+    .cp {
+        min-width: 304px;
+        min-height: 78px;
+    }
+}
