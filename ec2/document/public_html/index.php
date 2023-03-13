@@ -49,8 +49,10 @@ if ("dev2." . _DOMAIN_ === _SERVER_) {
     if (false !== strpos(_PATH_, ".")) {
         $pathinfo = pathinfo(_PATH_);
 
-        if (in_array($pathinfo["extension"], ["css", "js",], true)) {
-            $path = __DIR__ . "/../" . ("js" === $pathinfo["extension"] ? "scripts" : "styles") . "/dev/" . $pathinfo["basename"];
+        // "css", 
+
+        if (in_array($pathinfo["extension"], ["js",], true)) {
+            $path = __DIR__ . "/../" . (false !== strpos(_PATH_, "styles") ? "styles" : "scripts") . "/dev/" . $pathinfo["basename"];
 
             if (!file_exists($path)) {
                 new Discord(404, [
