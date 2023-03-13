@@ -1,7 +1,7 @@
 import { Module } from "../component/module"
 import { UIPrivacyContent } from "./class"
 
-export const dependenciesStyleIds = [104, 1004, 1005,]
+export const dependenciesStyleIds = [104, 1005,]
 
 export default {
     css: dependenciesStyleIds,
