@@ -1,0 +1,10 @@
+.ha2 {
+    color: var(--a2);
+    text-decoration: unset;
+}
+@media (hover: hover) {
+    .ha2:hover {
+        text-decoration: underline;
+        text-underline-offset: 25%;
+    }
+}
