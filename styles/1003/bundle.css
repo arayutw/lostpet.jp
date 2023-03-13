@@ -1,0 +1,118 @@
+/* main */
+.c3a {
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+/* side */
+.c3b1a {
+    padding: unset;
+    text-align: center;
+    font-size: .9rem;
+    height: 40px;
+    line-height: 40px;
+    background-color: var(--b2);
+    margin: 0 8px;
+    border-radius: 4px;
+}
+.c3b1b {
+    padding: 16px var(--s1);
+}
+.c3b1b1 {
+    margin: 0 0 16px;
+    padding: unset;
+    line-height: 1;
+    font-size: .9rem;
+    color: var(--a3);
+}
+.c3b1c {
+    border-top: 1px solid var(--b2);
+}
+.c3b1b2 {
+    margin: unset;
+    padding: unset;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+}
+.c3b1b2a {
+    height: 40px;
+    line-height: 40px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+.c3b1b2at1::before {
+    background-color: #e74c3e;
+    display: block;
+    width: 1em;
+    height: 1em;
+    content: "";
+    border-radius: 4px;
+    margin-right: 8px;
+}
+.c3b1b2at2::before {
+    background-color: #2980b9;
+    /*background: linear-gradient(to right bottom, #2980b9 50%, #1a8840 50%);*/
+    display: block;
+    width: 1em;
+    height: 1em;
+    content: "";
+    border-radius: 4px;
+    margin-right: 8px;
+}
+.c3b1b2at3 {
+    width: 1em;
+    height: 1em;
+    margin-right: 8px;
+}
+.c3b1b2at4 {
+    width: .8em;
+    height: .8em;
+    margin-left: auto;
+}
+.c3b1b2at3a {
+    fill: var(--a3);
+}
+@media screen and (min-width:1024px) {
+    .c3 {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .c3a {
+        padding-right: 32px;
+        padding-left: 32px;
+        width: calc(100% - 304px);
+    }
+
+    .c3at1 {
+        background-image: radial-gradient(circle at top left, transparent 9%, var(--b1) 10%, var(--b1) 15%, transparent 16%), radial-gradient(circle at bottom left, transparent 9%, var(--b1) 10%, var(--b1) 15%, transparent 16%), radial-gradient(circle at top right, transparent 9%, var(--b1) 10%, var(--b1) 15%, transparent 16%), radial-gradient(circle at bottom right, transparent 9%, var(--b1) 10%, var(--b1) 15%, transparent 16%), radial-gradient(circle, transparent 25%, var(--b2) 26%), linear-gradient(45deg, transparent 46%, var(--b1) 47%, var(--b1) 52%, transparent 53%), linear-gradient(135deg, transparent 46%, var(--b1) 47%, var(--b1) 52%, transparent 53%);
+        background-size: 6em 6em;
+        background-color: var(--b2);
+    }
+
+    .c3b {
+        width: 240px;
+    }
+
+    .c3b1 {
+        position: sticky;
+        top: 49px;
+        left: 0;
+        padding-top: 8px;
+    }
+
+    .c3b1b {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .c3b1b2a {
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: .9rem;
+    }
+}
