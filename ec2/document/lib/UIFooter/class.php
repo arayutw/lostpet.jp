@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class UIFooter
 {
-    static public array $css = [105, 1002,];
+    static public array $css = [1002,];
     static public array $js = [];
 
     static public function create()
