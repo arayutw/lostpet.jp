@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class UIHeader
 {
-    static public array $css = [101, 102, 1001,];
+    static public array $css = [1001,];
     static public array $js = [];
 
     static public function create()
