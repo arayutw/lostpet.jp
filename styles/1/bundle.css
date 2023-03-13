@@ -1,0 +1,68 @@
+html {
+  background-color: var(--b1);
+  color: var(--a2);
+  font: 400 16px/1.618 "Helvetica Neue", -apple-system, Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  word-break: break-all;
+
+  --s1: 8px;
+}
+
+body {
+  margin: unset;
+  padding: unset;
+}
+
+img,
+svg {
+  display: block;
+}
+
+.h {
+  visibility: hidden;
+}
+
+@media (prefers-color-scheme: light) {
+  .t1 {
+    color-scheme: light;
+
+    --a1: #000;
+    --a2: #333;
+    --a3: #666;
+    --a4: #999;
+
+    --b1: #fff;
+    --b2: #f2f2f7;
+    --b3: #e5e5ea;
+    --b4: #d1d1d6;
+    --b6: #aeaeb2;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .t2 {
+    color-scheme: dark;
+
+    --a1: #fff;
+    --a2: #eee;
+    --a3: #bbb;
+    --a4: #999;
+
+    --b1: #1c1c1e;
+    --b2: #2c2c2e;
+    --b3: #3a3a3c;
+    --b4: #48484a;
+    --b6: #636366;
+  }
+}
+
+@media screen and (min-width:360px) {
+    html {
+        --s1: 16px;
+    }
+}
+
+@media screen and (min-width:480px) {
+    html {
+        --s1: 24px;
+    }
+}
