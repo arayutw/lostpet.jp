@@ -1,14 +1,16 @@
 import { dependenciesStyleIds } from ".";
+import { UIContactContent } from "../10/class";
 import { UIHeader } from "../2/class";
 import { UIFooter } from "../3/class";
 import { UIMain } from "../4/class";
 import { UITermsContent } from "../5/class";
+import { UIPrivacyContent } from "../6/class";
 import { Component, InitOptions } from "../component";
 import { Content, ContentData } from "../script/content";
 import { Doc, DocManager } from "../script/document";
 import { Column2DocumentContent } from "./interface";
 
-type Builder = typeof UITermsContent
+type Builder = typeof UITermsContent | typeof UIPrivacyContent | typeof UIContactContent
 
 // 利用規約 - apiで内容を取得して反映するだけ (外部ファイル不要)
 // プライバシー - apiで内容を取得して反映するだけ (外部ファイル不要)
@@ -83,10 +85,12 @@ export class Column2Document extends Component implements Content {
                 this.window.js.load(data.id)
                     .then(([Constructor,]: [Builder]) => {
                         if (this.S) {
+                            this.content?.destroy();
+
                             resolve(this.content = new Constructor({
                                 id: data.id,
                                 P: this,
-                            }));
+                            }) as Column2DocumentContent);
                         }
                     })
                     .finally(reject);
@@ -104,6 +108,8 @@ export class Column2Document extends Component implements Content {
                         ui.main.element,
                         ui.footer.element
                     );
+
+                    this.emit("ready");
 
                     resolve();
                 })
