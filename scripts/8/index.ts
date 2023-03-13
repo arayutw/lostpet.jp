@@ -3,7 +3,7 @@ import { Win } from "../script/window"
 import { Popup } from "./class"
 import { PopupItem } from "./item";
 
-export const dependenciesStyleIds = [106, 1006,]
+export const dependenciesStyleIds = [1006,]
 
 export default {
     css: dependenciesStyleIds,
