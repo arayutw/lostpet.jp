@@ -1,0 +1,16 @@
+.cp {
+    margin-left: auto;
+    margin-right: auto;
+}
+@media screen and (max-width:359px) {
+    .cp {
+        min-width: 320px;
+        min-height: 144px;
+    }
+}
+@media screen and (min-width:360px) {
+    .cp {
+        min-width: 304px;
+        min-height: 78px;
+    }
+}
