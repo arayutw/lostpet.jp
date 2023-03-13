@@ -1,0 +1,83 @@
+.c7 {
+    border-radius: 6px;
+    box-shadow: var(--c6a);
+    font-size: .9rem;
+
+    border: var(--c6b);
+    min-width: 200px;
+    max-height: 50vh;
+
+    background-color: var(--b2);
+    display: flex;
+    flex-direction: column;
+    row-gap: 1px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    contain: layout paint;
+}
+
+.c7sw {
+    width: calc(100% - 2px);
+}
+
+.c7i {
+    background-color: var(--b1);
+}
+
+.c7a {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.c7ai {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.c7p {
+    fill: var(--a3);
+}
+
+/* for border */
+
+.c7b {
+    margin-top: 2px;
+}
+
+.c7s {
+    color: var(--c7s);
+    font-weight: 700;
+    background-color: var(--b2);
+}
+
+.c7s .c7p {
+    stroke-width: 1px;
+    fill: var(--c7s);
+    stroke: var(--c7s);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .c7 {
+        transition: margin-top .15s, opacity .15s;
+    }
+
+    .c7sp {
+        margin-top: -8px;
+        opacity: 0;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --c7s: #bfdbfe;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .t1 {
+        --c7s: #2563eb;
+    }
+}
