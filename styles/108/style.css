@@ -1,0 +1,28 @@
+.i1,
+.i2 {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--b6);
+    background-color: var(--i1);
+}
+
+.i1 {
+    height: 40px;
+    padding: 0 8px;
+
+}
+
+.i2 {
+    font-family: inherit;
+    padding: 8px;
+    resize: vertical;
+    min-height: 140px;
+}
+
+.i1:focus,
+.i2:focus {
+    background-color: var(--b1);
+}
