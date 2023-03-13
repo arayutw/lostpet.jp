@@ -23,15 +23,15 @@ class Column2Content
 
     public array $body = [];
 
-    public array $css = [
-        1,
-    ];
+    public array $css = [];
 
     public array $head = [];
 
     public function html()
     {
         $this->css = [...array_unique([
+            1,
+            1004,
             ...$this->css,
             ...UIHeader::$css,
             ...UIFooter::$css,
