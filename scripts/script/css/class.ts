@@ -7,15 +7,22 @@ type CSSText = string
 
 type MediaQueryType = "global" | "hover" | `min${"360" | "480" | "600" | "768" | "1024" | "1120" | "1280"}` | `max${"359" | "479" | "599" | "767" | "1023" | "1119" | "1279"}` | "light" | "dark" | "hover:light" | "hover:dark" | "motion"
 
-type Position = [number, number]
+type Position = [number, number];
 
-type MetaEntry = {
-    id: StyleId
-    position: Position
+type PositionEntry = {
+    index: Position
     type: MediaQueryType
 }
 
-export type MetaEntries = Array<MetaEntry>
+type PositionEntries = Array<PositionEntry>
+
+type MetaEntry = {
+    css: StyleIds
+    id: number
+    position: PositionEntries
+}
+
+type MetaEntries = Array<MetaEntry>
 
 type IdEntry = {
     expires_at: number
@@ -33,6 +40,7 @@ type StyleEntry = {
 type StyleEntries = Array<StyleEntry>
 
 type CacheEntry = {
+    css: StyleIds
     id: StyleId
     styles: StyleEntries
 }
@@ -40,6 +48,11 @@ type CacheEntry = {
 type AttachOptions = {
     build?: boolean
 } | true | null
+
+type Module = {
+    css?: StyleIds
+    text: string
+}
 
 export class CSS extends Component {
     private promises: {
@@ -110,21 +123,24 @@ export class CSS extends Component {
                         const cssText = responses[0];
 
                         (responses[1] as MetaEntries).forEach((entry) => {
-                            const start = entry.position[0];
-                            const end = start + entry.position[1];
                             const id = entry.id;
-                            const type = entry.type;
 
-                            if (!this.caches[id]) {
-                                this.caches[id] = {
-                                    id: id,
-                                    styles: [],
-                                };
-                            }
+                            this.caches[id] = {
+                                css: entry.css,
+                                id: id,
+                                styles: [],
+                            };
 
-                            this.caches[id].styles.push({
-                                text: cssText.slice(start, end),
-                                type: type,
+                            entry.position.forEach((position) => {
+                                const start = position.index[0];
+                                const end = start + position.index[1];
+                                const type = position.type;
+
+                                this.caches[id].styles.push({
+                                    text: cssText.slice(start, end),
+                                    type: type,
+                                });
+
                             });
                         });
 
@@ -148,6 +164,7 @@ export class CSS extends Component {
             Promise.all(ids.map((id) => {
                 if (!this.caches[id]) {
                     this.caches[id] = {
+                        css: [],
                         id: id,
                         styles: [],
                     };
@@ -156,11 +173,27 @@ export class CSS extends Component {
                     const promise = promises[id];
 
                     return promise ? promise : (promises[id] = new Promise((resolve, reject) => {
-                        fetch("/styles/" + id + ".css?v=" + this.window!.version)
-                            .then((res) => res.text())
-                            .then((text) => {
+                        import("/styles/" + id + ".js?v=" + this.window!.version)
+                            .then((response) => {
                                 if (this.S) {
+                                    const module = response.default as Module;
+                                    const promises: Array<any> = [module,];
+
+                                    const styleIds: Array<number> | undefined = module.css;
+                                    if (styleIds) promises.push(this.window.css.load(styleIds));
+
+                                    return Promise.all(promises);
+                                }
+                            })
+                            .then((res) => {
+                                if (this.S) {
+                                    const module = res![0] as Module;
+                                    const text = module.text;
                                     const positions: Array<number> = [];
+
+                                    if (module.css) {
+                                        this.caches[id].css = module.css;
+                                    }
 
                                     [
                                         "@media screen and (min-width:360px){",
@@ -302,8 +335,11 @@ export class CSS extends Component {
         if (!Array.isArray(ids)) ids = [ids];
 
         let changed = false;
+        const attachIds = ids.slice();
 
-        ids.forEach((id) => {
+        ids.forEach((id) => attachIds.push(...this.caches[id].css));
+
+        attachIds.forEach((id) => {
             for (let i = 0, a = this.entries; a.length > i; i++) {
                 const entry = a[i];
 
@@ -313,7 +349,7 @@ export class CSS extends Component {
                     return;
                 }
             }
-            7
+
             this.entries.push({
                 expires_at: 0,
                 id: id,
@@ -323,7 +359,13 @@ export class CSS extends Component {
             changed = true;
         });
 
-        if (changed && (true === options || true === options?.build)) this.build();
+        if (changed) {
+            this.update();
+
+            if (true === options || true === options?.build) {
+                this.build();
+            }
+        }
     }
 
     detach(source: Component, ids: StyleId | StyleIds): void {
@@ -360,6 +402,8 @@ export class CSS extends Component {
             this.T[0] = setTimeout(() => this.build(), 500);
 
         } else {
+            this.update();
+
             const styleE = this.element;
 
             const textMap: {
@@ -427,9 +471,9 @@ export class CSS extends Component {
         }
     }
 
-    update(options: AttachOptions = null): void {
+    private update(options: AttachOptions = null): void {
         const now = Date.now();
-        let changed = false;
+        // let changed = false;
 
         this.entries = this.entries.filter((entry) => {
             entry.sources = entry.sources.filter((instance) => instance && instance.S);
@@ -439,7 +483,7 @@ export class CSS extends Component {
                     entry.expires_at = now + (10 * 1000);
 
                 } else if (now > entry.expires_at) {
-                    changed = true;
+                    //  changed = true;
                     return false;
                 }
             }
@@ -447,6 +491,6 @@ export class CSS extends Component {
             return true;
         });
 
-        if (changed && (true === options || true === options?.build)) this.build();
+        // if (changed && (true === options || true === options?.build)) this.build();
     }
 }
