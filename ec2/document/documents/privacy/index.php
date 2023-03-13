@@ -9,9 +9,6 @@ $client = new Column2Content();
 $client->id = 6;
 
 $client->css = [
-    ...$client->css,
-    104,
-    1004,
     1005,
 ];
 
