@@ -36,7 +36,9 @@ class CSS
 
     private function split(int $style_id): array
     {
-        $text = file_get_contents(__DIR__ . "/../../styles/" . (2 === _STAGE_ ? "dev" : "prod") . "/{$style_id}.css");
+        $module = json_decode(substr(file_get_contents(__DIR__ . "/../../styles/" . (2 === _STAGE_ ? "dev" : "prod") . "/{$style_id}.js"), 15), true);
+
+        $text = $module["text"];
 
         $positions = [];
 
@@ -182,11 +184,45 @@ class CSS
 
     public function __construct(array $style_ids)
     {
-        $key = implode(":", $style_ids);
         $stage = 2 === _STAGE_ ? "dev" : "prod";
 
+        $check_ids = $style_ids;
+        $done_ids = [];
+        $configs = [];
+
+        while ($check_ids) {
+            $id = array_pop($check_ids);
+
+            if (!in_array($id, $done_ids, true)) {
+                $done_ids[] = $id;
+
+                $module = json_decode(substr(file_get_contents(__DIR__ . "/../../styles/{$stage}/{$id}.js"), 15), true);
+
+                $configs[$id] = [
+                    "css" => [],
+                ];
+
+                if (isset($module["css"])) {
+                    $configs[$id]["css"] = $module["css"];
+
+                    foreach ($module["css"] as $dependencies_id) {
+                        if (!in_array($dependencies_id, $done_ids, true)) {
+                            $check_ids[] = $dependencies_id;
+                            $style_ids[] = $dependencies_id;
+                        }
+                    }
+                }
+            }
+        }
+
+        $style_ids = [...array_unique($style_ids),];
+
+        sort($style_ids);
+
+        $key = implode(":", $style_ids);
+
         $version = max([
-            ...array_map(fn (int $id) => filemtime(__DIR__ . "/../../styles/{$stage}/{$id}.css"), $style_ids),
+            ...array_map(fn (int $id) => filemtime(__DIR__ . "/../../styles/{$stage}/{$id}.js"), $style_ids),
         ]);
 
         $row = RDS::fetch("SELECT `id`, `version` FROM `css` WHERE `stage`=? AND `key`=? LIMIT 1;", [
@@ -202,8 +238,6 @@ class CSS
                 $key,
             ]);
 
-            sort($style_ids);
-
             foreach ($style_ids as $id) $this->parse($id);
 
             $this->build();
@@ -216,14 +250,28 @@ class CSS
                 "ContentType" => "text/css;charset=utf-8",
             ]);
 
+            $map = [];
+
+            foreach ($this->position as $entry) {
+                $id = $entry["id"];
+
+                if (!isset($map[$id])) {
+                    $map[$id] = $configs[$id] + [
+                        "id" => $id,
+                        "position" => [],
+                    ];
+                }
+
+                $map[$id]["position"][] = [
+                    "index" => $entry["position"],
+                    "type" => $entry["type"],
+                ];
+            }
+
             RDS::execute("UPDATE `css` SET `version`=?, `key`=?, `map`=? WHERE `id`=? LIMIT 1;", [
                 $version,
                 $key,
-                json_encode(array_map(fn (array $entry) => [
-                    "id" => $entry["id"],
-                    "position" => $entry["position"],
-                    "type" => $entry["type"],
-                ], $this->position)),
+                json_encode(array_values($map)),
                 $bundle_id,
             ]);
         }
