@@ -1,0 +1,43 @@
+.c1 {
+    border-bottom: 1px solid var(--b3);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: var(--s1);
+    padding-right: var(--s1);
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: var(--b1);
+    z-index: 2;
+}
+
+.c1a {
+    width: 24px;
+    height: 24px;
+    margin-right: auto;
+}
+
+.c1a1 {
+    width: 24px;
+    height: 24px;
+}
+
+.c1b {
+    height: 32px;
+    line-height: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+@media screen and (min-width:480px) {
+    .c1 {
+        height: 48px;
+    }
+
+    .c1a,
+    .c1a1 {
+        height: 20px;
+        width: 123.75px;
+    }
+}
