@@ -1,0 +1,102 @@
+.c8 {
+    width: min(414px, 100% - 82px);
+    position: fixed;
+    bottom: 32px;
+    border: var(--c7b);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px 32px;
+    box-shadow: var(--c7a);
+    border-radius: 6px;
+    background-color: var(--b1);
+    font-size: .9rem;
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+}
+
+.c8a {
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.c8b {
+    padding: 12px;
+    border-radius: 6px;
+    margin-left: auto;
+}
+
+.c8ap {
+    background-color: var(--c8ap);
+}
+
+.c8ap1 {
+    fill: var(--c8ap1);
+}
+
+.c8an {
+    background-color: var(--c8an);
+}
+
+.c8an1 {
+    fill: var(--c8an1);
+}
+
+.c8aw {
+    background-color: var(--c8aw);
+}
+
+.c8aw1 {
+    fill: var(--c8aw1);
+}
+
+.c8ai {
+    background-color: var(--c8ai);
+}
+
+.c8ai1 {
+    fill: var(--c8ai1);
+}
+
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --c8ap: #BCF0DA;
+        --c8ap1: #03543F;
+
+        --c8an: #fee2e2;
+        --c8an1: #771D1D;
+
+        --c8aw: #ffedd5;
+        --c8aw1: #7c2d12;
+
+        --c8ai: #dbeafe;
+        --c8ai1: #1e3a8a;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .t1 {
+        --c8ap: #DEF7EC;
+        --c8ap1: #014737;
+
+        --c8an: #FDE8E8;
+        --c8an1: #991b1b;
+
+        --c8aw: #feecdc;
+        --c8aw1: #9a3412;
+
+        --c8ai: #eff6ff;
+        --c8ai1: #1e40af;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .c8 {
+        transition: opacity .15s, bottom .15s;
+    }
+
+    .c8p {
+        opacity: 0;
+        bottom: 0;
+    }
+}
