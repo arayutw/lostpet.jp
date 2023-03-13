@@ -1,0 +1,5 @@
+@media (hover: hover) {
+    .hb2:hover {
+        background-color: var(--b2);
+    }
+}
