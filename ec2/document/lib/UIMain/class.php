@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class UIMain
 {
-    static public array $css = [106, 107, 1003,];
+    static public array $css = [1003,];
     static public array $js = [];
 
     /*
