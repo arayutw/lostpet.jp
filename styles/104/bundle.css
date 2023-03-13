@@ -1,0 +1,29 @@
+.a1 {
+    color: var(--a5);
+    text-underline-offset: 25%;
+}
+@media (prefers-color-scheme: light) {
+  .t1 {
+    --a5: #0064dc;
+  }
+}
+@media (hover: hover) and (prefers-color-scheme: light) {
+  .t1 {
+    --a5h: #0576ff;
+  }
+}
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --a5: #93c5fd;
+    }
+}
+@media (hover: hover) and (prefers-color-scheme: dark) {
+    .t2 {
+        --a5h: #69aefc;
+    }
+}
+@media (hover: hover) {
+    .a1:hover {
+        color: var(--a5h);
+    }
+}
