@@ -1,0 +1,28 @@
+.ht1 {
+    background-color: var(--t1);
+}
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --t1: #156bf4;
+    }
+}
+@media (hover: hover) and (prefers-color-scheme: dark) {
+    .t2 {
+        --t1h: #0a58d6;
+    }
+}
+@media (prefers-color-scheme: light) {
+    .t1 {
+        --t1: #f8ca8e;
+    }
+}
+@media (hover: hover) and (prefers-color-scheme: light) {
+    .t1 {
+        --t1h: #fadbb2;
+    }
+}
+@media (hover: hover) {
+    .ht1:hover {
+        background-color: var(--t1h);
+    }
+}
