@@ -265,7 +265,6 @@ export class Doc extends Component {
     }
 
     render(data: DocumentData | null): void {
-
         const docManager = this.P;
         const loc = this.location;
         const type = this.type;
