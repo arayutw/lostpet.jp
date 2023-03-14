@@ -1,0 +1,24 @@
+.sk {
+    background-color: var(--sk);
+}
+@media (prefers-color-scheme: light) {
+    .t1 {
+        --sk: rgb(209 213 219);
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .t2 {
+        --sk: rgb(55 65 81);
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .sk {
+        animation: sk 2s cubic-bezier(.4, 0, .6, 1) infinite;
+    }
+
+    @keyframes sk {
+        50% {
+            opacity: .5;
+        }
+    }
+}
