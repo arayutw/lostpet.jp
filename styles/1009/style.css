@@ -10,14 +10,14 @@
     margin-bottom: 32px;
 }
 
-.c9h {
-    text-align: center;
-    font-size: 2rem;
-    margin: unset;
-}
-
 .c9f {
     display: flex;
     flex-direction: column;
     row-gap: 32px;
+}
+
+.c9h {
+    text-align: center;
+    font-size: 2rem;
+    margin: unset;
 }
