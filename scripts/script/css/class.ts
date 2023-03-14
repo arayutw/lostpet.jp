@@ -360,15 +360,15 @@ export class CSS extends Component {
         });
 
         if (changed) {
-            this.update();
-
             if (true === options || true === options?.build) {
                 this.build();
+            } else {
+                this.update();
             }
         }
     }
 
-    detach(source: Component, ids: StyleId | StyleIds): void {
+    detach(source: Component, ids: StyleId | StyleIds, options: AttachOptions = null): void {
         if (!Array.isArray(ids)) ids = [ids];
 
         let changed = false;
@@ -391,7 +391,11 @@ export class CSS extends Component {
         });
 
         if (changed) {
-            this.update();
+            if (true === options || true === options?.build) {
+                this.build();
+            } else {
+                this.update();
+            }
         }
     }
 
