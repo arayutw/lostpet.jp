@@ -9,8 +9,11 @@ $client = new Column2Content();
 $client->id = 10;
 
 $client->css = [
+    102,
     108,
     109,
+    110,
+    111,
     1009,
 ];
 
@@ -77,6 +80,7 @@ $client->body = [
             "attribute" => [
                 "action" => "/",
                 "class" => "c9f",
+                "id" => "p10f",
                 "method" => "GET",
                 "target" => "_blank",
             ],
@@ -93,8 +97,17 @@ $client->body = [
                         ],
                         [
                             "attribute" => [
+                                "autocapitalize" => "none",
+                                "autocomplete" => "off",
                                 "class" => "i1",
+                                "inputmode" => "email",
+                                "maxlength" => "100",
+                                "minlength" => "6",
+                                "name" => "email",
                                 "placeholder" => "mail@lostpet.jp",
+                                "required" => true,
+                                "spellcheck" => "true",
+                                "type" => "email",
                             ],
                             "tagName" => "input",
                         ],
@@ -113,8 +126,17 @@ $client->body = [
                         ],
                         [
                             "attribute" => [
+                                "autocapitalize" => "none",
+                                "autocomplete" => "off",
                                 "class" => "i1",
+                                "inputmode" => "text",
+                                "maxlength" => "50",
+                                "minlength" => "5",
+                                "name" => "title",
                                 "placeholder" => "問い合わせの種類",
+                                "required" => true,
+                                "spellcheck" => "true",
+                                "type" => "text",
                             ],
                             "tagName" => "input",
                         ],
@@ -133,8 +155,16 @@ $client->body = [
                         ],
                         [
                             "attribute" => [
+                                "autocapitalize" => "none",
+                                "autocomplete" => "off",
                                 "class" => "i2",
+                                "inputmode" => "text",
+                                "maxlength" => "2000",
+                                "minlength" => "5",
+                                "name" => "description",
                                 "placeholder" => "案件について問い合わせる場合は、日付、地域、名前を教えて下さい。",
+                                "required" => true,
+                                "spellcheck" => "true",
                             ],
                             "tagName" => "textarea",
                         ],
@@ -143,8 +173,22 @@ $client->body = [
                 ],
                 [
                     "attribute" => [
-                        "class" => "cp",
-                        "id" => "p10",
+                        "class" => "cp sk",
+                        "id" => "p10c",
+                    ],
+                    "tagName" => "div",
+                ],
+                [
+                    "attribute" => [
+                        "class" => "btw",
+                    ],
+                    "children" => [
+                        "attribute" => [
+                            "class" => "a3 bt ht1",
+                            "disabled" => true,
+                        ],
+                        "children" => "送信する",
+                        "tagName" => "button",
                     ],
                     "tagName" => "div",
                 ],
