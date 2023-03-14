@@ -14,4 +14,7 @@
 | [9](./9) | Dialogプラグイン。 |
 | [10](./10) | 「問い合わせ」のページ。 |
 | [11](./11) | Cloudflare Turnstile。 => SPAだとエラーが頻発して非常に使いづらい。 |
-| [12](./12) | Cloudflare Turnstile。 => SPAだとエラーが頻発して非常に使いづらい。 |
+| [12](./12) | Google Recaptcha。 |
+| [13](./13) | Form Error Message。 |
+| [14](./14) | Email Input Validity。 |
+| [15](./15) | Text Input Validity。 |
