@@ -55,7 +55,7 @@ export type On = (source: Component, name: EmitEventType, callback: EmitEventLis
 export type Off = (source: Component | null, name: EmitEventType, callback: EmitEventListener) => void
 export type Destroy = () => void
 export type Init = (options: InitOptions) => void
-export type Emit = (name: EmitEventType, event?: EmitEventData) => void //{ [key: string]: any }
+export type Emit = (name: EmitEventType, event?: EmitEventData) => void
 
 export type ToEventEntry = [EmitEventListener, EmitEventOptions | undefined, Component | null];
 export type ToEventEntries = Array<ToEventEntry>
