@@ -1,0 +1,18 @@
+.bt {
+    width: fit-content;
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+}
+
+.bt:disabled {
+    opacity: .4;
+    pointer-events: none;
+}
+
+.btw {
+    display: flex;
+    column-gap: 8px;
+    justify-content: center;
+}
