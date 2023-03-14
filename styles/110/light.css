@@ -1,0 +1,5 @@
+@media (prefers-color-scheme: light) {
+    .t1 {
+        --sk: rgb(209 213 219);
+    }
+}
