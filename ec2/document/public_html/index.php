@@ -101,10 +101,6 @@ if (1 === _REQUEST_) {
 
         array_pop($tokens);
     }
-
-    http_response_code(404);
-
-    exit;
 } else {
     if (3 === _REQUEST_) {
         session_cache_limiter("");
@@ -125,11 +121,20 @@ if (1 === _REQUEST_) {
         $_POST = json_decode(file_get_contents("php://input"), true);
     }
 
+    if (
+        (null !== ($_SERVER["HTTP_ORIGIN"] ?? null) && "https://" . _SERVER_ !== $_SERVER["HTTP_ORIGIN"])
+        || (null !== ($_SERVER["HTTP_SEC_FETCH_SITE"] ?? null) && "same-origin" !== $_SERVER["HTTP_SEC_FETCH_SITE"])
+        || (null !== ($_SERVER["HTTP_SEC_FETCH_MODE"] ?? null) && "same-origin" !== $_SERVER["HTTP_SEC_FETCH_MODE"])
+        || (null !== ($_SERVER["HTTP_X_CSRF_TOKEN"] ?? null) && _SERVER_ !== $_SERVER["HTTP_X_CSRF_TOKEN"])
+    ) {
+        http_response_code(400);
+        exit;
+    }
+
     while ($tokens) {
         $path = __DIR__ . "/.." . _PATH_ . "/index.php";
 
         if (file_exists($path)) {
-            http_response_code(200);
             header("content-type:application/json;charset=utf-8");
             header('x-robots-tag:noindex');
             require $path;
@@ -140,4 +145,6 @@ if (1 === _REQUEST_) {
     }
 }
 
+
+http_response_code(404);
 exit;
