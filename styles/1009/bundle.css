@@ -10,14 +10,28 @@
     margin-bottom: 32px;
 }
 
+.c9f {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+}
+
 .c9h {
     text-align: center;
     font-size: 2rem;
     margin: unset;
 }
 
-.c9f {
-    display: flex;
-    flex-direction: column;
-    row-gap: 32px;
+@media screen and (min-width:1024px) {
+    .c9c {
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .c9f {
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
