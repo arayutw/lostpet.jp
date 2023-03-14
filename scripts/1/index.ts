@@ -1,7 +1,7 @@
 import { Module } from "../component/module"
 import { Column2Document } from "./class"
 
-export const dependenciesStyleIds = [1,];
+export const dependenciesStyleIds = [1, 1004,];
 
 export default {
     css: dependenciesStyleIds,
