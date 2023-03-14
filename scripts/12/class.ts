@@ -1,4 +1,4 @@
-import { Component, InitOptions } from "../component"
+import { Component, EmitEventListener, InitOptions } from "../component"
 
 export type Grecaptcha = {
     ready: (callback: () => void) => void
@@ -47,6 +47,9 @@ export class Recaptcha extends Component {
     constructor(options: InitOptions & {
         element: HTMLDivElement
         strict?: boolean
+        on?: {
+            change: EmitEventListener
+        },
     }) {
         super({
             on: options.on,
@@ -57,17 +60,17 @@ export class Recaptcha extends Component {
 
         var scriptE = document.createElement("script");
 
-        (true === options.strict ? Promise.resolve(false) : this.window!.fetch({
+        (true === options.strict ? Promise.resolve(false) : this.window.fetch({
             credentials: true,
             method: "GET",
             path: "recaptcha",
         }))
-            .then((res) => {
+            .then((res: boolean) => {
                 if (this.S) {
-                    if (res && (res as { status: boolean }).status) {
+                    if (res) {
                         this.confirmed = true;
                         this.element.remove();
-                        this.emit!("ready");
+                        // this.emit("ready");
 
                     } else {
                         return (new Promise<void>((resolve) => {
@@ -92,16 +95,17 @@ export class Recaptcha extends Component {
                 if (this.S && !this.confirmed) {
                     grecaptcha.ready(() => {
                         if (this.S) {
+
                             var win = this.window!;
                             var errorEv = () => {
                                 this.value = null;
-                                this.emit!("input");
+                                this.emit("change");
                             };
 
                             this.id = grecaptcha.render(element, {
                                 callback: (code) => {
                                     this.value = code;
-                                    this.emit!("input");
+                                    this.emit("change");
                                 },
                                 "error-callback": errorEv,
                                 "expired-callback": errorEv,
@@ -110,7 +114,9 @@ export class Recaptcha extends Component {
                                 theme: (document.documentElement.classList.contains("t2")) ? "dark" : "light",
                             });
 
-                            this.emit!("ready");
+                            // this.emit("ready");
+
+                            element.classList.remove("sk");
                         }
                     });
                 }
