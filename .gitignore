@@ -1,0 +1,17 @@
+.DS_Store
+node_modules
+
+.local
+s3
+
+iam
+
+ec2/lib
+ec2/root/config.json
+ec2/root/scripts
+ec2/root/styles
+ec2/root/lib/Encode
+ec2/root/lib/Secret
+
+ec2/root/documents/test/*
+**/game/*
